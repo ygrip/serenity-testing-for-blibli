@@ -1,0 +1,4 @@
+Search definition :
+As a user
+I want to perform an action to search a product in the website
+So that I can know the information of the product that i searched in the website
