@@ -18,12 +18,15 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
+import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
 /**
  * Created by Yunaz on 1/17/2017.
  */
 @DefaultUrl("http://www.blibli.com/")
 public class BlibliPage extends PageObject{
+
+    MobileAppsPage newtab;
     //login button
     private String login = "//body//*[@id='gdn-login-registrasi']";
 
@@ -43,7 +46,15 @@ public class BlibliPage extends PageObject{
 
     private String search_result_found = "//body//*[@id='blibli-main-ctrl']/section/div/div[@id='catalogViewSection']";
 
+
     private String item = "//body//*[@id='catalogProductListContentDiv']/div[2]/div";
+
+
+    public void init(){
+        WebDriver webDriver = getDriver();
+
+        webDriver.navigate().to("http://www.blibli.com/");
+    }
 
     public void user_choose_to_login(){
         WebDriver webDriver = getDriver();
@@ -114,14 +125,15 @@ public class BlibliPage extends PageObject{
 
         if(waitForNewTab(webDriver,500)){
             webDriver.switchTo().window(newTab.get(0));
-            checkTab();
-
-            webDriver.close();
-
-            webDriver.switchTo().window(oldTab);
-            checkHome();
         }
 
+    }
+
+    public void scroll_the_page(int x, int y) throws Exception {
+        WebDriver webDriver = getDriver();
+
+        JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+        jse.executeScript("window.scrollBy("+x+","+y+")", "");
     }
 
     public static boolean waitForNewTab(WebDriver driver,int timeout){
