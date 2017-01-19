@@ -18,12 +18,15 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
+import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
 /**
  * Created by Yunaz on 1/17/2017.
  */
 @DefaultUrl("http://www.blibli.com/")
 public class BlibliPage extends PageObject{
+
+    MobileAppsPage newtab;
     //login button
     private String login = "//body//*[@id='gdn-login-registrasi']";
 
@@ -112,12 +115,6 @@ public class BlibliPage extends PageObject{
 
         if(waitForNewTab(webDriver,500)){
             webDriver.switchTo().window(newTab.get(0));
-            checkTab();
-
-            webDriver.close();
-
-            webDriver.switchTo().window(oldTab);
-            checkHome();
         }
 
     }
@@ -141,18 +138,6 @@ public class BlibliPage extends PageObject{
             }
         }
         return check;
-    }
-
-
-
-    public void checkHome(){
-        WebDriver webDriver = getDriver();
-        assertEquals("Toko Online Blibli.com, Sensasi Belanja Online Shop ala Mall", webDriver.getTitle());
-    }
-
-    public void checkTab(){
-        WebDriver webDriver = getDriver();
-        assertEquals("Blibli – Windows Apps on Microsoft Store", webDriver.getTitle());
     }
 
     public String search_result(String def){
@@ -212,5 +197,9 @@ public class BlibliPage extends PageObject{
             e.printStackTrace();
         }
     }
-    // this comment use for testing commit
+    public void checkHome(){
+        WebDriver webDriver = getDriver();
+        assertEquals("Toko Online Blibli.com, Sensasi Belanja Online Shop ala Mall", webDriver.getTitle());
+    }
+
 }

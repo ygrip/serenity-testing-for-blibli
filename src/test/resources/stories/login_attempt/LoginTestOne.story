@@ -6,7 +6,7 @@ I want to perform an action to login in the website
 So that I can do more things in the website
 
 Scenario: user is attempting login by inputing random username and password
-Meta: @run
+Meta: @skip
 Given The user is on the 'http://blibli.com'
 And the popup is still exist user choose to 'close'
 When The user is entering his credentials : <br> username : 'yunaz.gilang@gmail.com' and password : 'abscAdac'

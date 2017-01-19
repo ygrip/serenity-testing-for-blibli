@@ -25,13 +25,15 @@ public class AcceptanceTestSuite extends SerenityStories {
     WebDriver driver;
 
     public AcceptanceTestSuite(){
-        runSerenity().inASingleSession();
+//        runSerenity().inASingleSession();
     }
 
     @Override
     public List<String> storyPaths() {
         List<String> storiesToRun = new ArrayList<String>();
 
+//        storiesToRun.add(0,"stories/login_attempt/LoginTestOne.story");
+//        storiesToRun.add(1,"stories/search_attempt/SearchTestOne.story");
         storiesToRun.add(0,"stories/hover_element_attempt/HoverAnItem.story");
 
         return storiesToRun;

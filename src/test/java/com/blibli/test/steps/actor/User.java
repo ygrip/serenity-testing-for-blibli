@@ -1,6 +1,7 @@
 package com.blibli.test.steps.actor;
 
 import com.blibli.test.pages.BlibliPage;
+import com.blibli.test.pages.MobileAppsPage;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.steps.ScenarioSteps;
@@ -19,6 +20,7 @@ import static org.hamcrest.Matchers.hasItem;
 public class User extends ScenarioSteps {
 
     BlibliPage mainpage;
+    MobileAppsPage mobilepage;
 
     @Step
     public void enter_username(String username){
@@ -66,6 +68,21 @@ public class User extends ScenarioSteps {
     @Step
     public void user_want_to_hover(String check){
         mainpage.hovering(check);
+    }
+
+    @Step
+    public void get_the_new_tab(String newtab){
+        assertTrue(mobilepage.checkTab(newtab));
+    }
+
+    @Step
+    public void close_the_tab(){
+        mobilepage.close_this_tab();
+    }
+
+    @Step
+    public void back_to_homepage(){
+        mobilepage.back_to_firstTab();
     }
 
     @Step
