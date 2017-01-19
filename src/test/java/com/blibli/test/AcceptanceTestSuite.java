@@ -32,7 +32,7 @@ public class AcceptanceTestSuite extends SerenityStories {
     public List<String> storyPaths() {
         List<String> storiesToRun = new ArrayList<String>();
 
-        storiesToRun.add(0,"stories/hover_element_attempt/HoverAnItem.story");
+        storiesToRun.add(0,"stories/order_something/AddToCart.story");
 
         return storiesToRun;
     }

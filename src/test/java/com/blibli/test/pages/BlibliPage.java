@@ -43,6 +43,8 @@ public class BlibliPage extends PageObject{
 
     private String search_result_found = "//body//*[@id='blibli-main-ctrl']/section/div/div[@id='catalogViewSection']";
 
+    private String item = "//body//*[@id='catalogProductListContentDiv']/div[2]/div";
+
     public void user_choose_to_login(){
         WebDriver webDriver = getDriver();
         WebElement btn_login = webDriver.findElement(By.xpath(login));
@@ -143,8 +145,6 @@ public class BlibliPage extends PageObject{
         return check;
     }
 
-
-
     public void checkHome(){
         WebDriver webDriver = getDriver();
         assertEquals("Toko Online Blibli.com, Sensasi Belanja Online Shop ala Mall", webDriver.getTitle());
@@ -196,6 +196,14 @@ public class BlibliPage extends PageObject{
         to_search.type(search_terms);
     }
 
+    public String getDefinitionsPage(String defPage){
+        //WebDriver webDriver = getDriver();
+
+        WebElementFacade definitionsListPage = find(By.xpath("//body//*[@id='catalogProductListContentDiv']//*[div[contains(text(),'"+defPage+"')]]"));
+
+        return definitionsListPage.getText();
+    }
+
     public void hit_enter_when_searching(){
         WebElementFacade to_search = find(By.xpath(search_field));
 
@@ -212,5 +220,19 @@ public class BlibliPage extends PageObject{
             e.printStackTrace();
         }
     }
+
+    public void click_an_item(){
+        WebElementFacade klikitem = find(By.xpath(item));
+        klikitem.click();
+    }
+
+    public String getDefinitionsofDescription(String descriptiontxt){
+        //WebDriver webDriver = getDriver();
+
+        WebElementFacade descriptionList = find(By.xpath("//body//*[@id='blibli-main-ctrl']//section//div//section//h1[contains(text(),'"+descriptiontxt+"')]"));
+
+        return descriptionList.getText();
+    }
+
     // this comment use for testing commit
 }

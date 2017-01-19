@@ -41,6 +41,11 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void should_see_page(String defin){
+        assertThat(mainpage.getDefinitionsPage(defin), containsString(defin));
+    }
+
+    @Step
     public void is_in_the_homepage(){
         mainpage.open();
     }
@@ -101,5 +106,15 @@ public class User extends ScenarioSteps {
             do_searching(param);
             user_clicked_button_search();
         }
+    }
+
+    @Step
+    public void select_an_item(){
+        mainpage.click_an_item();
+    }
+
+    @Step
+    public void should_see_description(String defin){
+        assertThat(mainpage.getDefinitionsofDescription(defin), containsString(defin));
     }
 }
