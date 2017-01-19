@@ -64,6 +64,11 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void user_want_to_hover(String check){
+        mainpage.hovering(check);
+    }
+
+    @Step
     public void user_get_the_search_result(String search_param, int x){
         if(x==1){
             assertThat(mainpage.search_result(search_param), containsString(search_param));
