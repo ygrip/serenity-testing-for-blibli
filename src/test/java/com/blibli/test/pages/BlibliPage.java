@@ -46,6 +46,11 @@ public class BlibliPage extends PageObject{
 
     private String search_result_found = "//body//*[@id='blibli-main-ctrl']/section/div/div[@id='catalogViewSection']";
 
+    public void init(){
+        WebDriver webDriver = getDriver();
+
+        webDriver.navigate().to("http://www.blibli.com/");
+    }
     public void user_choose_to_login(){
         WebDriver webDriver = getDriver();
         WebElement btn_login = webDriver.findElement(By.xpath(login));
@@ -117,6 +122,13 @@ public class BlibliPage extends PageObject{
             webDriver.switchTo().window(newTab.get(0));
         }
 
+    }
+
+    public void scroll_the_page(int x, int y) throws Exception {
+        WebDriver webDriver = getDriver();
+
+        JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+        jse.executeScript("window.scrollBy("+x+","+y+")", "");
     }
 
     public static boolean waitForNewTab(WebDriver driver,int timeout){

@@ -44,7 +44,12 @@ public class User extends ScenarioSteps {
 
     @Step
     public void is_in_the_homepage(){
-        mainpage.open();
+        mainpage.init();
+    }
+
+    @Step
+    public void do_a_scroll(int x, int y) throws Exception{
+        mainpage.scroll_the_page(x,y);
     }
 
     @Step
