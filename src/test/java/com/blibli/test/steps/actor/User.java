@@ -108,6 +108,11 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void is_in_the_profile_page(){
+        assertTrue(mainpage.user_is_in_the_profile_page());
+    }
+
+    @Step
     public void verify_later(){
 //        mainpage.click_recapthca();
         mainpage.verifikasi_nanti();

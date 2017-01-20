@@ -12,7 +12,7 @@ public class HoverToMenu {
     @Steps
     User actor;
 
-    @When("The user hover over a menu and wanted to click the menu '$item_menu' and then click the submenu '$item_submenu'")
+    @When("The user hover over a menu '$item_menu' and then click the submenu '$item_submenu'")
     public void hover_over_a_menu(String menu, String submenu){
         actor.user_want_to_hover(menu,submenu);
     }

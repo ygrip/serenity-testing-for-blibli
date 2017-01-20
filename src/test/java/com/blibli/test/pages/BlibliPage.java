@@ -60,6 +60,8 @@ public class BlibliPage extends PageObject{
 
     private String the_signed_user = "//body//*[@id='gdn-already-login-label']/strong";
 
+    private String profile_url = "https://www.blibli.com/member/profile";
+
     public void init(){
         WebDriver webDriver = getDriver();
 
@@ -333,6 +335,12 @@ public class BlibliPage extends PageObject{
         WebElement is_signed =  webDriver.findElement(By.xpath(the_signed_user));
 
         return is_signed.isDisplayed();
+    }
+
+    public Boolean user_is_in_the_profile_page(){
+        WebDriver webDriver = getDriver();
+
+        return webDriver.getCurrentUrl().equals(profile_url);
     }
 
     // this comment use for testing commit

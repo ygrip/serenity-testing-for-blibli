@@ -2,6 +2,7 @@ package com.blibli.test.steps;
 
 import com.blibli.test.steps.actor.User;
 import net.thucydides.core.annotations.Steps;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
@@ -27,7 +28,7 @@ public class SignUpScenario {
         actor.check_in_the_verification_page();
     }
 
-    @Then("The user should be signed in and redirected to the website")
+    @Given("The user have been signed in and is in the website")
     public void is_the_user_signed_in(){
         actor.check_is_signed_up();
     }

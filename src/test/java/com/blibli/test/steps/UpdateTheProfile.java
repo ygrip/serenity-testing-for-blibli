@@ -2,6 +2,7 @@ package com.blibli.test.steps;
 
 import com.blibli.test.steps.actor.User;
 import net.thucydides.core.annotations.Steps;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 /**
@@ -11,9 +12,9 @@ public class UpdateTheProfile {
     @Steps
     User actor;
 
-    @When("The user want to update the profile")
-    public void user_is_open_update_profile_page(){
-
+    @Then("The user should be redirected to profile page")
+    public void user_is_in_profile_page(){
+        actor.is_in_the_profile_page();
     }
 
     @When("The user is inserting his fullname : '$fullname'")
