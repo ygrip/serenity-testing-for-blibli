@@ -135,19 +135,27 @@ public class BlibliPage extends PageObject{
         loginButton.click();
     }
 
-    public void hovering(String which){
+    public void hovering(String menu, String submenu){
         WebDriver webDriver = getDriver();
-        WebElement hover_menu = webDriver.findElement(By.xpath("//body//*[@id='mobile-app']/span"));
         Actions action = new Actions(webDriver);
+        WebElement hover_menu;
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
-        String oldTab =  webDriver.getWindowHandle();
-        action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath("//body//*[@id='mobile-app']//li//*[div[contains(text(),'"+which+"')]]"))).click().build().perform();
+        if(menu.equals("Mobile")){
+            hover_menu = webDriver.findElement(By.xpath("//body//*[@id='mobile-app']/span"));
+            String oldTab =  webDriver.getWindowHandle();
+            action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath("//body//*[@id='mobile-app']//li//*[div[contains(text(),'"+submenu+"')]]"))).click().build().perform();
 
-        ArrayList<String> newTab = new ArrayList<String>(webDriver.getWindowHandles());
-        newTab.remove(oldTab);
+            ArrayList<String> newTab = new ArrayList<String>(webDriver.getWindowHandles());
+            newTab.remove(oldTab);
 
-        if(waitForNewTab(webDriver,500)){
-            webDriver.switchTo().window(newTab.get(0));
+            if(waitForNewTab(webDriver,500)){
+                webDriver.switchTo().window(newTab.get(0));
+            }
+        }else if(menu.equals("User")){
+            hover_menu = webDriver.findElement(By.xpath(".//*[@id='gdn-already-login']"));
+
+            action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath("//body//*[@id='gdn-usermenu-box']/ul//li//a[contains(text(),'"+submenu+"')]"))).click().build().perform();
         }
 
     }

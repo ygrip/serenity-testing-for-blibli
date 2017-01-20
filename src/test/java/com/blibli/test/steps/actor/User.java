@@ -122,8 +122,8 @@ public class User extends ScenarioSteps {
     }
 
     @Step
-    public void user_want_to_hover(String check){
-        mainpage.hovering(check);
+    public void user_want_to_hover(String menu, String submenu){
+        mainpage.hovering(menu,submenu);
     }
 
     @Step
