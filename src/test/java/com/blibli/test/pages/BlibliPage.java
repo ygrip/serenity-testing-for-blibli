@@ -6,6 +6,7 @@ import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.Managed;
+import org.apache.xpath.operations.Bool;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -46,14 +48,35 @@ public class BlibliPage extends PageObject{
 
     private String search_result_found = "//body//*[@id='blibli-main-ctrl']/section/div/div[@id='catalogViewSection']";
 
-
     private String item = "//body//*[@id='catalogProductListContentDiv']/div[2]/div";
 
+    private String recaptcha = ".//*[@id='recaptcha-anchor']//div[@class='recaptcha-checkbox-checkmark']";
+
+    private String verifikasi_nanti = "//body//*[@id='gdn-pnv-later']";
+
+    private String lanjutkan_verifikasi_nanti = "//body//*[@id='gdn-pnv-later-continue']";
+
+    private String registration_popup = "//body//*[@id='gdn-registration-form']/div";
+
+    private String the_signed_user = "//body//*[@id='gdn-already-login-label']/strong";
 
     public void init(){
         WebDriver webDriver = getDriver();
 
         webDriver.navigate().to("http://www.blibli.com/");
+    }
+
+    public void open_new_tab(){
+        WebDriver webDriver = getDriver();
+        Actions action = new Actions(webDriver);
+
+        WebElement body = webDriver.findElement(By.xpath("//body//*[a[@id='gdn-logo-blibli']]"));
+
+        action.moveToElement(body).sendKeys(Keys.CONTROL, Keys.SHIFT).click(body).perform();
+
+        ArrayList<String> newTab = new ArrayList<>(webDriver.getWindowHandles());
+
+        webDriver.switchTo().window(newTab.get(1));
     }
 
     public void user_choose_to_login(){
@@ -157,14 +180,9 @@ public class BlibliPage extends PageObject{
         return check;
     }
 
-    public void checkHome(){
+    public Boolean checkHome(){
         WebDriver webDriver = getDriver();
-        assertEquals("Toko Online Blibli.com, Sensasi Belanja Online Shop ala Mall", webDriver.getTitle());
-    }
-
-    public void checkTab(){
-        WebDriver webDriver = getDriver();
-        assertEquals("Blibli – Windows Apps on Microsoft Store", webDriver.getTitle());
+        return webDriver.getCurrentUrl().equals("https://www.blibli.com");
     }
 
     public String search_result(String def){
@@ -244,6 +262,69 @@ public class BlibliPage extends PageObject{
         WebElementFacade descriptionList = find(By.xpath("//body//*[@id='blibli-main-ctrl']//section//div//section//h1[contains(text(),'"+descriptiontxt+"')]"));
 
         return descriptionList.getText();
+    }
+
+    public void click_recapthca(){
+        WebElementFacade captcha = find(By.xpath(recaptcha));
+
+        captcha.click();
+    }
+
+    public void verifikasi_nanti(){
+        WebDriver webDriver = getDriver();
+        WebElementFacade later = find(By.xpath(verifikasi_nanti));
+
+        later.click();
+
+        WebDriverWait wait = new WebDriverWait(webDriver,10);
+
+        WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(lanjutkan_verifikasi_nanti)));
+
+        popup.click();
+    }
+
+    public Boolean is_in_verification_page(){
+        WebDriver webDriver = getDriver();
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return webDriver.getTitle().equals("Halaman Verifikasi | Blibli.com");
+        }
+    }
+
+    public void user_want_to_sign_up(){
+        WebDriver webDriver =  getDriver();
+
+        WebElement btn_sign_up = webDriver.findElement(By.xpath(signup));
+
+        btn_sign_up.click();
+    }
+
+    public void insert_identity(String email, String pass){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        WebElement popup_register = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(registration_popup)));
+
+        if(popup_register.isDisplayed()){
+            WebElementFacade email_address = find(By.xpath("//body//*[@id='registrationFormEmailAddress']"));
+            WebElementFacade password_user = find(By.xpath("//body//*[@id='registrationFormPassword']"));
+            WebElementFacade btn_daftar = find(By.xpath("//body//*[@id='gdn-submit-registration']"));
+
+            email_address.type(email);
+            password_user.type(pass);
+            btn_daftar.click();
+        }
+    }
+
+    public Boolean check_is_signed_in(){
+        WebDriver webDriver = getDriver();
+
+        WebElement is_signed =  webDriver.findElement(By.xpath(the_signed_user));
+
+        return is_signed.isDisplayed();
     }
 
     // this comment use for testing commit

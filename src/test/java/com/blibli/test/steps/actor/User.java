@@ -1,11 +1,14 @@
 package com.blibli.test.steps.actor;
 
 import com.blibli.test.pages.BlibliPage;
+import com.blibli.test.pages.MailinatorPage;
 import com.blibli.test.pages.MobileAppsPage;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.steps.ScenarioSteps;
+import org.apache.xpath.operations.Bool;
 import org.jruby.RubyBoolean;
+import org.jruby.RubyProcess;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class User extends ScenarioSteps {
 
     BlibliPage mainpage;
     MobileAppsPage mobilepage;
+    MailinatorPage mailinator;
 
     @Step
     public void enter_username(String username){
@@ -58,6 +62,17 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void user_open_mailinator(){
+        mainpage.open_new_tab();
+        mailinator.switch_to_mailinator();
+    }
+
+    @Step
+    public Boolean is_the_mailinator(){
+        return mailinator.check_the_mailinator_page();
+    }
+
+    @Step
     public void now_the_user_clicked_login(){
         mainpage.user_choose_to_login();
     }
@@ -65,6 +80,37 @@ public class User extends ScenarioSteps {
     @Step
     public void now_close_the_pop_up(){
         mainpage.closePopUp();
+    }
+
+    @Step
+    public void user_click_sign_up(){
+        mainpage.user_want_to_sign_up();
+    }
+
+    @Step
+    public void user_inputing_identity(String email, String password){
+        mainpage.insert_identity(email,password);
+    }
+
+    @Step
+    public void check_in_the_verification_page(){
+        if(mainpage.is_in_verification_page()){
+            System.out.println("This is the first attempt of the user to sign up");
+            verify_later();
+        }else{
+            System.out.println("User has been choosing to verify later");
+        }
+    }
+
+    @Step
+    public void check_is_signed_up(){
+        assertTrue(mainpage.check_is_signed_in());
+    }
+
+    @Step
+    public void verify_later(){
+//        mainpage.click_recapthca();
+        mainpage.verifikasi_nanti();
     }
 
     @Step
