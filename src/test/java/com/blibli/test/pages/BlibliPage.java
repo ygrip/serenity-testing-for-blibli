@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -61,6 +62,22 @@ public class BlibliPage extends PageObject{
     private String the_signed_user = "//body//*[@id='gdn-already-login-label']/strong";
 
     private String profile_url = "https://www.blibli.com/member/profile";
+
+    private String full_name = "//body//*[@id='gdn-profile-name']";
+
+    private String day_birth = "//body//*[@id='gdn-profile-day']";
+
+    private String month_birth = "//body//*[@id='gdn-profile-month']";
+
+    private String year_birth = "//body//*[@id='gdn-profile-year']";
+
+    private String number_phone = "//body//*[@id='gdn-profile-phone']";
+
+    private String klik_pria = "//body//*[@id='profileForm']/div[5]/div/div/span[1]/input";
+
+    private String klik_wanita = "//body//*[@id='profileForm']/div[5]/div/div/span[1]/input";
+
+    private String simpan_profile = "//body//*[@id='gdn-profile-submit']";
 
     public void init(){
         WebDriver webDriver = getDriver();
@@ -343,5 +360,47 @@ public class BlibliPage extends PageObject{
         return webDriver.getCurrentUrl().equals(profile_url);
     }
 
-    // this comment use for testing commit
+    public void fill_fulname(String fullname){
+        WebElementFacade name = find(By.xpath(full_name));
+
+        name.type(fullname);
+    }
+
+    public void fill_date_of_birth(String day, String month, String year){
+        WebDriver driver = getDriver();
+
+        Select dayBirth = new Select(driver.findElement(By.xpath(day_birth)));
+        //dayBirth.deselectAll();
+        dayBirth.selectByVisibleText(day);
+
+        Select monthBirth = new Select(driver.findElement(By.xpath(month_birth)));
+        //monthBirth.deselectAll();
+        monthBirth.selectByVisibleText(month);
+
+        Select yearBirth = new Select(driver.findElement(By.xpath(year_birth)));
+        //yearBirth.deselectAll();
+        yearBirth.selectByVisibleText(year);
+    }
+
+    public void fill_phone_number(String phone_number){
+        WebElementFacade phone = find(By.xpath(number_phone));
+
+        phone.type(phone_number);
+    }
+
+    public void select_gender(String gender){
+        if(gender.equals("male")){
+            WebElementFacade klikmale = find(By.xpath(klik_pria));
+            klikmale.click();
+        }
+        else if(gender.equals("female")){
+            WebElementFacade klikfemale = find(By.xpath(klik_wanita));
+            klikfemale.click();
+        }
+    }
+
+    public void click_save_button(){
+        WebElementFacade kliksaveprofile = find(By.xpath(simpan_profile));
+        kliksaveprofile.click();
+    }
 }

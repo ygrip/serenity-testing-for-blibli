@@ -9,6 +9,7 @@ import net.thucydides.core.steps.ScenarioSteps;
 import org.apache.xpath.operations.Bool;
 import org.jruby.RubyBoolean;
 import org.jruby.RubyProcess;
+import org.yecht.Data;
 
 import java.util.List;
 
@@ -179,6 +180,31 @@ public class User extends ScenarioSteps {
             do_searching(param);
             user_clicked_button_search();
         }
+    }
+
+    @Step
+    public void fill_profile_fullname(String fullname){
+        mainpage.fill_fulname(fullname);
+    }
+
+    @Step
+    public void fill_profile_birthday(String day, String month, String year){
+        mainpage.fill_date_of_birth(day,month,year);
+    }
+
+    @Step
+    public void fill_profile_phone_number(String phone_number){
+        mainpage.fill_phone_number(phone_number);
+    }
+
+    @Step
+    public void fill_profile_gender(String gender){
+        mainpage.select_gender(gender);
+    }
+
+    @Step
+    public void hit_save_button(){
+        mainpage.click_save_button();
     }
 
     @Step
