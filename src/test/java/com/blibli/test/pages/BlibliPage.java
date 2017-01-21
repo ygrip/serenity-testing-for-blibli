@@ -1,5 +1,6 @@
 package com.blibli.test.pages;
 
+import com.sun.xml.internal.ws.api.client.SelectOptimalEncodingFeature;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
@@ -13,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -106,12 +108,15 @@ public class BlibliPage extends PageObject{
 
     public void closePopUp(){
         WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
         try {
-            WebElement container = webDriver.findElement(By.xpath("//body//*[@class='insider-opt-in-notification-button-container']"));
+            WebElement container = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//body//*[@class='insider-opt-in-notification-button-container']")));
 
             if(container.isDisplayed()){
                 WebElement element = webDriver.findElement(By.xpath("//body//div[contains(text(),'Nanti saja')]"));
                 element.click();
+            }else {
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -403,4 +408,93 @@ public class BlibliPage extends PageObject{
         WebElementFacade kliksaveprofile = find(By.xpath(simpan_profile));
         kliksaveprofile.click();
     }
+
+    public void click_user_profile_section(String menu){
+        String menu_to_click = "//body//*[@id='blibli-main-ctrl']//section//ul//li//*[span[contains(text(),'"+menu+"')]]";
+
+        WebDriver webDriver = getDriver();
+
+        WebDriverWait wait = new WebDriverWait(webDriver,10);
+
+        WebElement choosen_menu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(menu_to_click)));
+
+        choosen_menu.click();
+    }
+
+    public void click_edit_alamat(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone ){
+        String to_click = "//body//*[@id='blibli-main-ctrl']/section//div//a[contains(text(),'Edit Alamat')]";
+        String popup_edit_alamat = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']/div/div";
+
+        WebDriver webDriver = getDriver();
+        Actions action = new Actions(webDriver);
+
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        WebElement link_toclick = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(to_click)));
+
+        link_toclick.click();
+
+        WebElement the_popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(popup_edit_alamat)));
+
+        ((JavascriptExecutor)webDriver).executeScript("arguments[0].checked = true;", the_popup);
+
+            String field_nama_lengkap = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//div//input[@name='firstName']";
+            String field_alamat = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//div//textarea[@name='address']";
+            String field_provinsi = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//*[label[contains(text(),'Provinsi')]]//select";
+            String field_kota = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//*[label[contains(text(),'Kota')]]//select";
+            String field_kecamatan = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//*[label[contains(text(),'Kecamatan')]]//select";
+            String field_kelurahan = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//*[label[contains(text(),'Kelurahan')]]//select";
+            String field_email = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//*[label[contains(text(),'Alamat Email')]]//input";
+            String field_phone = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//input[@name='phone1']";
+            String btn_submit = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']//input[@type='submit']";
+
+            String js = "arguments[0].style.height='auto'; arguments[0].style.visibility='visible';";
+
+            WebElement input_nama_lengkap = webDriver.findElement(By.xpath(field_nama_lengkap));
+            ((JavascriptExecutor) webDriver).executeScript(js, input_nama_lengkap);
+//            action.moveToElement(input_nama_lengkap).click().build().perform();
+            input_nama_lengkap.clear();
+            input_nama_lengkap.sendKeys(nama_lengkap);
+
+            WebElement input_alamat = webDriver.findElement(By.xpath(field_alamat));
+            ((JavascriptExecutor) webDriver).executeScript(js, input_alamat);
+//            action.moveToElement(input_alamat).click().build().perform();
+            input_alamat.clear();
+            input_alamat.sendKeys(alamat);
+
+            Select prov = new Select(webDriver.findElement(By.xpath(field_provinsi)));
+            prov.selectByVisibleText(provinsi);
+
+            WebElement the_city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
+            the_city.click();
+            Select city = new Select(webDriver.findElement(By.xpath(field_kota)));
+            city.selectByVisibleText(kota);
+
+            WebElement the_kec = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
+            the_kec.click();
+            Select kec = new Select(webDriver.findElement(By.xpath(field_kecamatan)));
+            kec.selectByVisibleText(kecamatan);
+
+            WebElement the_kel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
+            the_kel.click();
+            Select kel = new Select(webDriver.findElement(By.xpath(field_kelurahan)));
+            kel.selectByVisibleText(kelurahan);
+
+            WebElement input_email = webDriver.findElement(By.xpath(field_email));
+            ((JavascriptExecutor) webDriver).executeScript(js, input_email);
+//            action.moveToElement(input_email).click().build().perform();
+            input_email.clear();
+            input_email.sendKeys(email);
+
+            WebElement input_phone = webDriver.findElement(By.xpath(field_phone));
+            ((JavascriptExecutor) webDriver).executeScript(js, input_phone);
+//            action.moveToElement(input_phone).click().build().perform();
+            input_phone.clear();
+            input_phone.sendKeys(handphone);
+
+            WebElement btn_simpan = webDriver.findElement(By.xpath(btn_submit));
+            btn_simpan.click();
+
+    }
+    // this comment use for testing commit
 }

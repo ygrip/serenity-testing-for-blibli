@@ -42,4 +42,14 @@ public class UpdateTheProfile {
     public void thenTheUserIsClickSaveButton(){
         actor.hit_save_button();
     }
+
+    @When("The user want to click the '$menu' in user profile page")
+    public void menu_to_click(String menu){
+        actor.menu_to_click_in_user_profile_page(menu);
+    }
+
+    @When("The user is inputting new data in alamat <br> Nama Lengkap : '$nama' <br> Alamat : '$alamat' <br> Provinsi : '$prov' <br> Kota '$kot' <br> Kecamatan : '$kec' <br> Kelurahan : '$kel' <br> Email : '$em' <br> Handphone : '$hp'")
+    public void input_new_address(String nama, String alamat, String prov, String kot, String kec, String kel, String email, String phone){
+        actor.update_alamat_user(nama,alamat,prov,kot,kec,kel,email,phone);
+    }
 }

@@ -3,6 +3,7 @@ package com.blibli.test.steps.actor;
 import com.blibli.test.pages.BlibliPage;
 import com.blibli.test.pages.MailinatorPage;
 import com.blibli.test.pages.MobileAppsPage;
+import javafx.beans.property.StringProperty;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.steps.ScenarioSteps;
@@ -106,6 +107,16 @@ public class User extends ScenarioSteps {
     @Step
     public void check_is_signed_up(){
         assertTrue(mainpage.check_is_signed_in());
+    }
+
+    @Step
+    public void menu_to_click_in_user_profile_page(String menu){
+        mainpage.click_user_profile_section(menu);
+    }
+
+    @Step
+    public void update_alamat_user(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+        mainpage.click_edit_alamat(nama_lengkap, alamat, provinsi, kota, kecamatan, kelurahan, email, handphone );
     }
 
     @Step

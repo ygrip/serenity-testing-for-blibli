@@ -7,7 +7,7 @@ So that I can choose the sub menu from the drop down list
 
 Scenario: The user is hovering the mobile app item and then clicked the Windows link
 Given The user is on the 'http//blibli.com'
-When The user hover over a menu and wanted to click the menu 'Mobile' and then click the submenu 'Windows'
+When The user hover over a menu 'Mobile' and then click the submenu 'Windows'
 And The user want to scroll the page '0' x, '750' y
 Then Thes user should directed to the 'Windows' page
 And The user choose to 'go back' the first tab
@@ -15,13 +15,13 @@ And The user choose to 'go back' the first tab
 Scenario: The user is hovering the mobile app item and then clicked the iOS link
 Meta:@skip
 Given The user is on the 'http//blibli.com'
-When The user hover over a menu and wanted to click the menu 'Mobile' and then click the submenu 'iOS'
+When The user hover over a menu 'Mobile' and then click the submenu 'iOS'
 Then Thes user should directed to the 'iOS' page
 And The user choose to 'go back' the first tab
 
 Scenario: The user is hovering the mobile app item and then clicked the Android link
 Meta:@skip
 Given The user is on the 'http//blibli.com'
-When The user hover over a menu and wanted to click the menu 'Mobile' and then click the submenu 'Android'
+When The user hover over a menu 'Mobile' and then click the submenu 'Android'
 Then Thes user should directed to the 'Android' page
 And The user choose to 'close' the first tab
