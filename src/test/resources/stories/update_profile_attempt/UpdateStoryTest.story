@@ -17,4 +17,5 @@ Then the user is click save button
 When The user want to click the 'Buku Alamat' in user profile page
 And The user want to 'close' the popup
 And The user is inputting new data in alamat <br> Nama Lengkap : 'Yunaz Gilang' <br> Alamat : 'Jl. Klampis Ngasem 96' <br> Provinsi : 'Jawa Timur' <br> Kota 'Kota Surabaya' <br> Kecamatan : 'Sukolilo' <br> Kelurahan : 'Klampis Ngasem' <br> Email : 'akuYunaz@mailinator.com' <br> Handphone : '082257170526'
+Then The user should see that their default address has been updated with the following details : <br> Nama Lengkap : 'Yunaz Gilang' <br> Alamat : 'Jl. Klampis Ngasem 96' <br> Provinsi : 'Jawa Timur' <br> Kota 'Kota Surabaya' <br> Kecamatan : 'Sukolilo' <br> Kelurahan : 'Klampis Ngasem' <br> Email : 'akuYunaz@mailinator.com' <br> Handphone : '082257170526'
 

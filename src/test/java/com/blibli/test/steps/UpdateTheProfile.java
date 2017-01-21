@@ -52,4 +52,9 @@ public class UpdateTheProfile {
     public void input_new_address(String nama, String alamat, String prov, String kot, String kec, String kel, String email, String phone){
         actor.update_alamat_user(nama,alamat,prov,kot,kec,kel,email,phone);
     }
+
+    @Then("The user should see that their default address has been updated with the following details : <br> Nama Lengkap : '$nama' <br> Alamat : '$alamat' <br> Provinsi : '$prov' <br> Kota '$kot' <br> Kecamatan : '$kec' <br> Kelurahan : '$kel' <br> Email : '$em' <br> Handphone : '$hp'")
+    public void user_get_the_updated_default_address(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+        actor.to_check_the_update_on_default_alamat(nama_lengkap,alamat,provinsi,kota,kecamatan,kelurahan,email,handphone);
+    }
 }

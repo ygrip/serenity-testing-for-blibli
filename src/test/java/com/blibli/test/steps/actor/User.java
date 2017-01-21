@@ -125,6 +125,11 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void to_check_the_update_on_default_alamat(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+        assertTrue(mainpage.check_is_the_default_alamat_saved(nama_lengkap,alamat,provinsi,kota,kecamatan,kelurahan,email,handphone));
+    }
+
+    @Step
     public void verify_later(){
 //        mainpage.click_recapthca();
         mainpage.verifikasi_nanti();

@@ -496,5 +496,59 @@ public class BlibliPage extends PageObject{
             btn_simpan.click();
 
     }
+
+    public Boolean check_is_the_default_alamat_saved(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+        String component_to_wait = "//body//*[@id='blibli-main-ctrl']//section//*[div[@class='single-address default-address']]//div";
+        Boolean result = false;
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        WebElement div_alamat = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(component_to_wait)));
+
+        if(div_alamat.isDisplayed()){
+            Boolean check_name, check_alamat, check_prov, check_kot, check_kec, check_kel, check_em, check_ph;
+
+            String al_first_name = "//body//*[@id='blibli-main-ctrl']//section//div//span[@class='ng-binding'][@ng-bind='defaultAddress.firstName']";
+            String al_last_name = "//body//*[@id='blibli-main-ctrl']//section//div//label[@class='ng-binding'][@ng-bind='defaultAddress.lastName']";
+            String al_address = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.address']";
+            String al_kecamatan = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.kecamatan']";
+            String al_kelurahan = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.kelurahan']";
+            String al_city = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.city']";
+            String al_state = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.state']";
+            String al_phone = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.phone2']";
+            String al_email = "//body//*[@id='blibli-main-ctrl']//section//div//span[@ng-bind='defaultAddress.email']";
+
+            WebElement field_first_name = webDriver.findElement(By.xpath(al_first_name));
+            WebElement field_last_name = webDriver.findElement(By.xpath(al_last_name));
+            String namanya = field_first_name.getText()+" "+field_last_name.getText();
+            check_name = namanya.equals(nama_lengkap);
+
+            WebElement field_address = webDriver.findElement(By.xpath(al_address));
+            check_alamat = field_address.getText().equals(alamat);
+
+            WebElement field_kec =  webDriver.findElement(By.xpath(al_kecamatan));
+            check_kec = field_kec.getText().equals(kecamatan);
+
+            WebElement field_kel =  webDriver.findElement(By.xpath(al_kelurahan));
+            check_kel = field_kel.getText().equals(kelurahan);
+
+            WebElement field_kota =  webDriver.findElement(By.xpath(al_city));
+            check_kot = field_kota.getText().equals(kota);
+
+            WebElement field_prov =  webDriver.findElement(By.xpath(al_state));
+            check_prov = field_prov.getText().equals(provinsi);
+
+            WebElement field_phone =  webDriver.findElement(By.xpath(al_phone));
+            check_ph = field_phone.getText().equals(handphone);
+
+            WebElement field_email =  webDriver.findElement(By.xpath(al_email));
+            check_em = field_email.getText().equals(email);
+
+            if(check_name && check_alamat && check_kec && check_kel && check_kot && check_prov && check_em && check_ph){
+                result = true;
+            }
+        }
+        return result;
+    }
     // this comment use for testing commit
 }
