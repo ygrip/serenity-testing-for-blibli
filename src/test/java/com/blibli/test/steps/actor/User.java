@@ -64,6 +64,68 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void do_a_scroll_until_visibility_of(String xpath) throws Exception{
+        mainpage.scroll_until_the_visibility_of(xpath);
+    }
+
+    @Step
+    public void i_want_to_buy_that(int jumlah){
+        mainpage.buy_that_item_for(jumlah);
+    }
+
+    @Step
+    public void then_process_the_transaction(){
+        mainpage.process_the_order();
+    }
+
+    @Step
+    public void open_pesanan_details(String tab){
+        mainpage.open_pesanan_details(tab);
+    }
+
+    @Step
+    public void check_order_validity(){
+        mainpage.check_the_order_validity();
+//        assertTrue(mainpage.check_the_order_validity());
+    }
+
+    @Step
+    public void open_mail_user(String email){
+        mailinator.check_the_email_inbox(email);
+    }
+
+    @Step
+    public void open_email_order_from_blibli(){
+        mailinator.open_email_order_from_blibli();
+        assertTrue(mailinator.check_the_transaction());
+    }
+
+    @Step
+    public void switch_to_tab(int x){
+        mainpage.switch_to_tab(x);
+    }
+
+    @Step
+    public void cancel_order(){
+        mainpage.batalkan_pesanan();
+    }
+
+    @Step
+    public void then_choose_to_proceed_the_payment(){
+        mainpage.lanjutkan_pembayaran();
+    }
+
+    @Step
+    public void user_get_order_details(){
+        mainpage.get_transaction_details();
+    }
+
+    @Step
+    public void then_choose_the_payment_method(String method, String opt, int sub_opt){
+        mainpage.pilih_metode_pembayaran(method, opt, sub_opt);
+    }
+
+    @Step
     public void user_open_mailinator(){
         mainpage.open_new_tab();
         mailinator.switch_to_mailinator();
@@ -117,6 +179,11 @@ public class User extends ScenarioSteps {
     @Step
     public void update_alamat_user(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
         mainpage.click_edit_alamat(nama_lengkap, alamat, provinsi, kota, kecamatan, kelurahan, email, handphone );
+    }
+
+    @Step
+    public void check_is_in_the_home_page(){
+        assertTrue(mainpage.checkHome());
     }
 
     @Step

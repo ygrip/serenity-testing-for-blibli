@@ -21,4 +21,9 @@ public class OpenMailininator {
     public void check_is_the_mailinator(){
         actor.is_the_mailinator();
     }
+
+    @When("The user want to open inbox in their account : '$account'")
+    public void open_inbox(String email){
+        actor.open_mail_user(email);
+    }
 }

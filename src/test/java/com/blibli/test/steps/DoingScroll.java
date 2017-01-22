@@ -17,4 +17,9 @@ public class DoingScroll {
         actor.do_a_scroll(x,y);
     }
 
+    @When("The user want to scroll the page until element '$xpath' is displayed")
+    public void scroll_until(String xpath) throws Exception{
+        actor.do_a_scroll_until_visibility_of(xpath);
+    }
+
 }

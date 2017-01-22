@@ -1,5 +1,6 @@
 package com.blibli.test.pages;
 
+import com.blibli.test.order.OrderDetails;
 import com.sun.xml.internal.ws.api.client.SelectOptimalEncodingFeature;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.annotations.findby.FindBy;
@@ -14,6 +15,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.internal.Coordinates;
+import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -51,7 +54,7 @@ public class BlibliPage extends PageObject{
 
     private String search_result_found = "//body//*[@id='blibli-main-ctrl']/section/div/div[@id='catalogViewSection']";
 
-    private String item = "//body//*[@id='catalogProductListContentDiv']/div[2]/div";
+    private String item = "//body//*[@id='catalogProductListContentDiv']/div[1]/div";
 
     private String recaptcha = ".//*[@id='recaptcha-anchor']//div[@class='recaptcha-checkbox-checkmark']";
 
@@ -77,15 +80,31 @@ public class BlibliPage extends PageObject{
 
     private String klik_pria = "//body//*[@id='profileForm']/div[5]/div/div/span[1]/input";
 
-    private String klik_wanita = "//body//*[@id='profileForm']/div[5]/div/div/span[1]/input";
+    private String klik_wanita = "//body//*[@id='profileForm']/div[5]/div/div/span[2]/input";
 
     private String simpan_profile = "//body//*[@id='gdn-profile-submit']";
+
+    private String al_btn_beli = "//body//*[@id='MyBtn'][@class='btn-buy']";
+
+    private String al_bag_belanja = "//body//*[@id='gdn-cart-button']/span[1]";
+
+    private String al_section_beli = "//body//*[@id='blibli-main-ctrl']//section//div[@class='purchase-section']";
+
+    private String al_tab_header_pesanan = "//body//*[@id='blibli-main-ctrl']//section//div[@class='tabs-header']//li";
 
     public void init(){
         WebDriver webDriver = getDriver();
 
         webDriver.navigate().to("http://www.blibli.com/");
     }
+
+    public void switch_to_tab(int tab){
+        WebDriver webDriver = getDriver();
+        ArrayList<String> newTab = new ArrayList<>(webDriver.getWindowHandles());
+
+        webDriver.switchTo().window(newTab.get(tab));
+    }
+
 
     public void open_new_tab(){
         WebDriver webDriver = getDriver();
@@ -147,7 +166,6 @@ public class BlibliPage extends PageObject{
         WebElement loginButton = webDriver.findElement(By.xpath(btn_for_login));
         Actions action = new Actions(webDriver);
 
-
         /*String javaScript = "var evObj = document.createEvent('MouseEvents');" +
                 "evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" +
                 "arguments[0].dispatchEvent(evObj);";
@@ -189,6 +207,19 @@ public class BlibliPage extends PageObject{
 
         JavascriptExecutor jse = (JavascriptExecutor) webDriver;
         jse.executeScript("window.scrollBy("+x+","+y+")", "");
+    }
+
+    public void scroll_until_the_visibility_of(String xpath) throws Exception {
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        try {
+            ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", element);
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean waitForNewTab(WebDriver driver,int timeout){
@@ -284,8 +315,157 @@ public class BlibliPage extends PageObject{
     }
 
     public void click_an_item(){
-        WebElementFacade klikitem = find(By.xpath(item));
-        klikitem.click();
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        try {
+            WebElement klikitem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(item)));
+            klikitem.click();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void buy_that_item_for(int jumlah){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_section_beli))).isDisplayed()){
+            String al_quantity = "//body//*[@id='gdn-input-quantity']";
+
+            WebElement field_quantity = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_quantity)));
+            field_quantity.clear();
+            field_quantity.sendKeys(String.valueOf(jumlah));
+
+            WebElement btn_buy = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_btn_beli)));
+            btn_buy.click();
+        }
+    }
+
+    public void process_the_order(){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        WebElement btn_bag = wait.until((ExpectedConditions.visibilityOfElementLocated(By.xpath(al_bag_belanja))));
+        btn_bag.click();
+
+        String al_checkout = "//body//*[@id='gdn-sb-page-continue-checkout']";
+
+        WebElement btn_checkout = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_checkout)));
+        try {
+            scroll_until_the_visibility_of(al_checkout);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        btn_checkout.click();
+    }
+
+    public void lanjutkan_pembayaran(){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        String al_lanjutkan = "//body//*[@id='gdn-next-step']";
+
+        WebElement btn_lanjut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_lanjutkan)));
+        try {
+            scroll_until_the_visibility_of(al_lanjutkan);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        btn_lanjut.click();
+    }
+
+    public void pilih_metode_pembayaran(String method, String opt, int sub_opt){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        String al_method_to_click = " ";
+        String al_method_opt = " ";
+        String al_method_sub_opt = " ";
+        String al_btn_check_out = "//body//*[@id='gdn-submit-checkout']";
+        int status = 0;
+
+        if(method.equals("Internet Banking")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-e-banking']";
+            al_method_opt = "//body//*[@id='gdn-payment-option-e-banking']";
+        }
+        else if(method.equals("Kartu Debit/Kredit")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-credit-card']";
+            al_method_opt = "//body//*[@id='gdn-payment-option-credit-card']";
+        }
+        else if(method.equals("Cicilan 0%")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-cicilan']";
+            al_method_opt = "//body//*[@id='gdn-payment-option-cicilan']";
+            al_method_sub_opt = "//body//*[@id='payInstallmentTenorId']";
+            status = 1;
+        }
+        else if(method.equals("Transfer")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-virtual-account']";
+            al_method_opt = "//body//*[@id='gdn-payment-option-virtual-account-1']";
+        }
+        else if(method.equals("Uang Elektronik")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-e-money']";
+            al_method_opt = "//body//*[@id='gdn-payment-option-e-money']";
+        }
+        else if(method.equals("Indomaret")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-indomaret']";
+            status = 2;
+        }
+        else if(method.equals("Pos Indonesia")){
+            al_method_to_click = "//body//*[@id='gdn-payment-group-pospay']";
+            status = 2;
+        }
+
+        WebElement method_to_click = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_to_click)));
+        try {
+            scroll_until_the_visibility_of(al_method_to_click);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        method_to_click.click();
+
+        if(status==2){
+
+        }else if(status == 1){
+            WebElement method_opt = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_opt)));
+            try {
+                scroll_until_the_visibility_of(al_method_opt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            method_opt.click();
+            Select option = new Select(webDriver.findElement(By.xpath(al_method_opt)));
+            option.selectByVisibleText(opt);
+
+            WebElement method_sub_opt = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_sub_opt)));
+            method_sub_opt.click();
+            Select sub_option = new Select(webDriver.findElement(By.xpath(al_method_sub_opt)));
+            sub_option.selectByIndex(sub_opt);
+
+        }else{
+            WebElement method_opt = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_opt)));
+            try {
+                scroll_until_the_visibility_of(al_method_opt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            method_opt.click();
+            Select option = new Select(webDriver.findElement(By.xpath(al_method_opt)));
+            option.selectByVisibleText(opt);
+        }
+
+        WebElement btn_check_out = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_btn_check_out)));
+        try {
+            scroll_until_the_visibility_of(al_btn_check_out);
+            Coordinates coordinate = ((Locatable)btn_check_out).getCoordinates();
+            coordinate.onPage();
+            coordinate.inViewPort();
+            btn_check_out.click();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getDefinitionsofDescription(String descriptiontxt){
@@ -462,6 +642,8 @@ public class BlibliPage extends PageObject{
             input_alamat.clear();
             input_alamat.sendKeys(alamat);
 
+            WebElement the_prov = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_provinsi)));
+            the_prov.click();
             Select prov = new Select(webDriver.findElement(By.xpath(field_provinsi)));
             prov.selectByVisibleText(provinsi);
 
@@ -549,6 +731,83 @@ public class BlibliPage extends PageObject{
             }
         }
         return result;
+    }
+
+    public void open_pesanan_details(String choosen_tab){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        String al_order_tab =".//*[@id='blibli-main-ctrl']//section//div[@class='tabs-header']//li//*[span[contains(text(),'"+choosen_tab+"')]]";
+
+        WebElement tab_to_click = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_order_tab)));
+        tab_to_click.click();
+    }
+
+    public Boolean check_the_order_validity(){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        Boolean check_code_payment = false;
+        Boolean check_code_transaction = false;
+
+        String al_code_payment = "//body//*[@id='blibli-main-ctrl']//section//div[@class='order-detail']//div/span[@class='bankpayment']/strong";
+        String al_code_transaction = "//body//*[@id='blibli-main-ctrl']//section//div[@class='order-detail']//div//*[label[contains(text(),'NO PESANAN:')]]//a";
+
+        WebElement field_code_payment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_payment)));
+        WebElement field_code_transaction = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
+
+        check_code_payment = field_code_payment.equals(OrderDetails.no_rekening);
+        check_code_transaction = field_code_transaction.equals(OrderDetails.no_pesanan);
+
+        if(check_code_payment && check_code_transaction){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    public void get_transaction_details(){
+        String al_code_payment = "//body//*[@id='blibli-main-ctrl']/section/div/section//div[@class='total-payment']//div//div[@class='layer']";
+        String al_code_transaction = "//body//*[@id='blibli-main-ctrl']/section/div/section//div//span[@class='ordernumber']/strong";
+
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        WebElement code_payment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_payment)));
+        try {
+            scroll_until_the_visibility_of(al_code_payment);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        WebElement code_transaction = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
+        try {
+            scroll_until_the_visibility_of(al_code_transaction);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OrderDetails.no_rekening = code_payment.getText();
+        OrderDetails.no_pesanan = code_transaction.getText();
+    }
+
+    public void batalkan_pesanan(){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        String al_code_transaction = "//body//*[@id='gdn-history-cancel-order']";
+
+        WebElement btn_to_click = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
+        try {
+            scroll_until_the_visibility_of(al_code_transaction);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        btn_to_click.click();
+
+        String al_yes_btn = ".//*[@id='sweet-alert-confirm']";
+        WebElement btn_yes = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_yes_btn)));
+        btn_yes.click();
+
     }
     // this comment use for testing commit
 }
