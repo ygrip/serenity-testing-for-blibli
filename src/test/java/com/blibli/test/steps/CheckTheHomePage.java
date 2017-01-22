@@ -15,12 +15,12 @@ public class CheckTheHomePage {
     User actor;
 
     @Given("The user is on the '$page'")
-    public void user_in_the_mainpage(){
-        actor.is_in_the_homepage();
+    public void user_is_open_the_page(String page){
+        actor.open_a_page(page);
     }
 
     @Then("The user should be in blibi homepage")
     public void should_be_on_the_main_page(){
-        actor.is_in_the_homepage();
+        actor.open_a_page("https://www.blibli.com/");
     }
 }

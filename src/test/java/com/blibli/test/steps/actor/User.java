@@ -54,8 +54,8 @@ public class User extends ScenarioSteps {
     }
 
     @Step
-    public void is_in_the_homepage(){
-        mainpage.init();
+    public void open_a_page(String page){
+        mainpage.init(page);
     }
 
     @Step
@@ -85,13 +85,12 @@ public class User extends ScenarioSteps {
 
     @Step
     public void check_order_validity(){
-        mainpage.check_the_order_validity();
-//        assertTrue(mainpage.check_the_order_validity());
+        assertTrue(mainpage.check_the_order_validity());
     }
 
     @Step
     public void open_mail_user(String email){
-        mailinator.check_the_email_inbox(email);
+        mainpage.check_the_email_inbox(email);
     }
 
     @Step
@@ -126,14 +125,18 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void delete_email(){
+        mailinator.user_delete_email();
+    }
+
+    @Step
     public void user_open_mailinator(){
-        mainpage.open_new_tab();
         mailinator.switch_to_mailinator();
     }
 
     @Step
-    public Boolean is_the_mailinator(){
-        return mailinator.check_the_mailinator_page();
+    public void is_the_mailinator(){
+        assertTrue( mailinator.check_the_mailinator_page());
     }
 
     @Step

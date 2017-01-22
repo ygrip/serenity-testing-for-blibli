@@ -34,11 +34,6 @@ public class OrderThatItem {
         actor.user_get_order_details();
     }
 
-    @When("The user want to check their order")
-    public void check_the_order(){
-        actor.is_in_the_homepage();
-    }
-
     @When("The user select the '$tab' option")
     public void user_open_pesanan_opt(String tab){
         actor.open_pesanan_details(tab);

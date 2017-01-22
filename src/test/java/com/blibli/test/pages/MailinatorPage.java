@@ -22,6 +22,8 @@ public class MailinatorPage extends PageObject{
     private String email_from_blibli = "//body//div[@class='row ng-scope oddrow_public']//*[div[contains(text(),'Selamat bergabung di Blibli.com')]]";
     private String email_order_from_blibli = "//body//div[@class='row ng-scope oddrow_public']//*[div[contains(text(),'Konfirmasi Order Telah Diterima')]]";
     private String btn_verifikasi = ".//*[@id='templateUpperBody']//table//span//a[contains(text(),'Verifikasi Nomor Handphone')]";
+    private String al_checkbox = "//body//div[@ng-repeat='email in emails']//div//label";
+    OrderDetails order;
 
     public void switch_to_mailinator(){
         WebDriver webDriver = getDriver();
@@ -37,16 +39,6 @@ public class MailinatorPage extends PageObject{
         }else{
             return false;
         }
-    }
-
-    public void check_the_email_inbox(String email_to_check){
-        WebDriver webDriver = getDriver();
-        WebDriverWait wait = new WebDriverWait(webDriver, 10);
-
-        WebElement input_field = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body//*[@id='inboxfield']")));
-        input_field.clear();
-        input_field.sendKeys(email_to_check);
-
     }
 
     public void user_click_the_go_button(){
@@ -83,5 +75,15 @@ public class MailinatorPage extends PageObject{
         WebElementFacade btn_ver = find(By.xpath(btn_verifikasi));
 
         btn_ver.click();
+    }
+
+    public void user_delete_email(){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+
+        String al_btn_delete = "//button//*[@id='public_delete_button']";
+
+        WebElement btn_delete = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_btn_delete)));
+        btn_delete.click();
     }
 }

@@ -15,10 +15,9 @@ public class CheckThePopUp {
     @Given("The popup is still exist user choose to '$stat'")
     public void user_is_in_the_homepage(String stat){
         if(stat.equals("close")){
-            actor.is_in_the_homepage();
             actor.now_close_the_pop_up();
         }else{
-            actor.is_in_the_homepage();
+
         }
     }
 

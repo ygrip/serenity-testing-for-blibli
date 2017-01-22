@@ -9,6 +9,7 @@ import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.Managed;
 import org.apache.xpath.operations.Bool;
+import org.apache.xpath.operations.Or;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +36,7 @@ import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver
 public class BlibliPage extends PageObject{
 
     MobileAppsPage newtab;
+    OrderDetails order;
     //login button
     private String login = "//body//*[@id='gdn-login-registrasi']";
 
@@ -92,10 +94,10 @@ public class BlibliPage extends PageObject{
 
     private String al_tab_header_pesanan = "//body//*[@id='blibli-main-ctrl']//section//div[@class='tabs-header']//li";
 
-    public void init(){
+    public void init(String url){
         WebDriver webDriver = getDriver();
 
-        webDriver.navigate().to("http://www.blibli.com/");
+        webDriver.navigate().to(url);
     }
 
     public void switch_to_tab(int tab){
@@ -755,8 +757,8 @@ public class BlibliPage extends PageObject{
         WebElement field_code_payment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_payment)));
         WebElement field_code_transaction = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
 
-        check_code_payment = field_code_payment.equals(OrderDetails.no_rekening);
-        check_code_transaction = field_code_transaction.equals(OrderDetails.no_pesanan);
+        check_code_payment = field_code_payment.getText().equals(OrderDetails.no_rekening);
+        check_code_transaction = field_code_transaction.getText().equals(OrderDetails.no_pesanan);
 
         if(check_code_payment && check_code_transaction){
             return true;
@@ -788,6 +790,7 @@ public class BlibliPage extends PageObject{
         }
         OrderDetails.no_rekening = code_payment.getText();
         OrderDetails.no_pesanan = code_transaction.getText();
+
     }
 
     public void batalkan_pesanan(){
@@ -809,5 +812,14 @@ public class BlibliPage extends PageObject{
         btn_yes.click();
 
     }
-    // this comment use for testing commit
+    public void check_the_email_inbox(String email_to_check){
+        WebDriver webDriver = getDriver();
+        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+
+        WebElement input_field = webDriver.findElement(By.xpath("//body//*[@id='inboxfield']"));
+        input_field.click();
+        input_field.sendKeys(email_to_check);
+        input_field.sendKeys(Keys.RETURN);
+
+    }
 }

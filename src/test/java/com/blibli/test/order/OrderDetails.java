@@ -5,5 +5,5 @@ package com.blibli.test.order;
  */
 public class OrderDetails {
     public static String no_pesanan;
-    public  static String no_rekening;
+    public static String no_rekening;
 }

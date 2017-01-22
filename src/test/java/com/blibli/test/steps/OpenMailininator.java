@@ -26,4 +26,9 @@ public class OpenMailininator {
     public void open_inbox(String email){
         actor.open_mail_user(email);
     }
+
+    @Then("The user want to delete the email")
+    public void delete_mail_in_mailinator(){
+        actor.delete_email();
+    }
 }
