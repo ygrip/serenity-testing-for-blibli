@@ -1,7 +1,6 @@
 package com.blibli.test.steps;
 
 import com.blibli.test.steps.actor.User;
-import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
 import org.jbehave.core.annotations.When;
 
@@ -13,13 +12,13 @@ public class DoingScroll {
     User actor;
 
     @When("The user want to scroll the page '$paramx' x, '$paramy' y")
-    public void do_the_scroll(int x, int y) throws Exception{
-        actor.do_a_scroll(x,y);
+    public void doTheScroll(int x, int y) throws Exception{
+        actor.doAScroll(x,y);
     }
 
     @When("The user want to scroll the page until element '$xpath' is displayed")
-    public void scroll_until(String xpath) throws Exception{
-        actor.do_a_scroll_until_visibility_of(xpath);
+    public void scrollUntil(String xpath) throws Exception{
+        actor.doAScrollUntilVisibilityOf(xpath);
     }
 
 }

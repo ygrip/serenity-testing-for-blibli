@@ -13,21 +13,21 @@ public class HoverToMenu {
     User actor;
 
     @When("The user hover over a menu '$item_menu' and then click the submenu '$item_submenu'")
-    public void hover_over_a_menu(String menu, String submenu){
-        actor.user_want_to_hover(menu,submenu);
+    public void hoverOverAMenu(String menu, String submenu){
+        actor.userWantToHover(menu,submenu);
     }
 
     @Then("Thes user should directed to the '$page' page")
-    public void user_directed_to_new_tab(String page){
-        actor.get_the_new_tab(page);
+    public void userDirectedToNewTab(String page){
+        actor.getTheNewTab(page);
     }
 
     @Then("The user choose to '$act' the first tab")
-    public void user_act_after_redirected(String act){
+    public void userActAfterRedirected(String act){
         if(act.equals("close")){
-            actor.close_the_tab();
+            actor.closeTheTab();
         }else{
-            actor.back_to_homepage();
+            actor.backToHomepage();
         }
     }
 }

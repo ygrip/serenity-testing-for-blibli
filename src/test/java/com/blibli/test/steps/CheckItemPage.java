@@ -13,6 +13,6 @@ public class CheckItemPage {
 
     @Given("i have searched for local items containing '$defin'")
     public void givenIHaveSearchedForLocalItemsContaining(String defin) {
-        actor.should_see_page(defin);
+        actor.shouldSeePage(defin);
     }
 }

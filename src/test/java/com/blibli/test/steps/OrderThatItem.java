@@ -14,49 +14,49 @@ public class OrderThatItem {
     User actor;
 
     @Given("The user want to buy that product for '$jumlah'")
-    public void order_that_item(int jumlah){
-        actor.i_want_to_buy_that(jumlah);
+    public void orderThatItem(int jumlah){
+        actor.iWantToBuyThat(jumlah);
     }
 
     @When("The user want to proceed the order")
-    public void proceed_the_order(){
-        actor.then_process_the_transaction();
-        actor.then_choose_to_proceed_the_payment();
+    public void proceedTheOrder(){
+        actor.thenProcessTheTransaction();
+        actor.thenChooseToProceedThePayment();
     }
 
     @When("The user want to choose the payment method by : <br> Method : '$method' <br> Method Option : '$opt' <br> and Sub Option : '$sub_opt'")
-    public void user_choose_the_payment(String by_method, String by_option, int by_sub_opt){
-        actor.then_choose_the_payment_method(by_method,by_option,by_sub_opt);
+    public void userChooseThePayment(String by_method, String by_option, int by_sub_opt){
+        actor.thenChooseThePaymentMethod(by_method,by_option,by_sub_opt);
     }
 
     @Then("The user should get the order details")
-    public void get_order_details(){
-        actor.user_get_order_details();
+    public void getOrderDetails(){
+        actor.userGetOrderDetails();
     }
 
     @When("The user select the '$tab' option")
-    public void user_open_pesanan_opt(String tab){
-        actor.open_pesanan_details(tab);
+    public void userOpenPesananOpt(String tab){
+        actor.openPesananDetails(tab);
     }
 
     @When("The user check the order validity")
     public void check_the_order_validity(){
-        actor.check_order_validity();
+        actor.checkOrderValidity();
     }
 
     @Then("The user should see their email order")
-    public void check_the_email_order(){
-        actor.open_email_order_from_blibli();
+    public void checkTheEmailOrder(){
+        actor.openEmailOrderFromBlibli();
     }
 
     @When("The user want to cancel their order")
-    public void cancel_order(){
-        actor.cancel_order();
+    public void cancelOrder(){
+        actor.cancelOrder();
     }
 
     @Then("The user want to switch to tab '$index'")
-    public void switch_tab(int index){
-        actor.switch_to_tab(index);
+    public void switchTab(int index){
+        actor.switchToTab(index);
     }
 
 }

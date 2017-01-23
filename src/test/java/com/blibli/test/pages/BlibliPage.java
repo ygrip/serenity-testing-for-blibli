@@ -1,24 +1,18 @@
 package com.blibli.test.pages;
 
 import com.blibli.test.order.OrderDetails;
-import com.sun.xml.internal.ws.api.client.SelectOptimalEncodingFeature;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
-import net.thucydides.core.annotations.Managed;
-import org.apache.xpath.operations.Bool;
-import org.apache.xpath.operations.Or;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
-import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
 /**
  * Created by Yunaz on 1/17/2017.
@@ -37,6 +30,8 @@ public class BlibliPage extends PageObject{
 
     MobileAppsPage newtab;
     OrderDetails order;
+
+    @FindBy()
     //login button
     private String login = "//body//*[@id='gdn-login-registrasi']";
 
@@ -100,7 +95,7 @@ public class BlibliPage extends PageObject{
         webDriver.navigate().to(url);
     }
 
-    public void switch_to_tab(int tab){
+    public void switchToTab(int tab){
         WebDriver webDriver = getDriver();
         ArrayList<String> newTab = new ArrayList<>(webDriver.getWindowHandles());
 
@@ -108,7 +103,7 @@ public class BlibliPage extends PageObject{
     }
 
 
-    public void open_new_tab(){
+    public void openNewTab(){
         WebDriver webDriver = getDriver();
         Actions action = new Actions(webDriver);
 
@@ -121,7 +116,7 @@ public class BlibliPage extends PageObject{
         webDriver.switchTo().window(newTab.get(1));
     }
 
-    public void user_choose_to_login(){
+    public void userChooseToLogin(){
         WebDriver webDriver = getDriver();
         WebElement btn_login = webDriver.findElement(By.xpath(login));
         btn_login.click();
@@ -145,25 +140,25 @@ public class BlibliPage extends PageObject{
 
     }
 
-    public void enter_a_username(String name){
+    public void enterAUsername(String name){
         WebElementFacade field_nama_user =  find(By.xpath(nama_user));
 
         field_nama_user.type(name);
     }
 
-    public void enter_a_password(String pass){
+    public void enterAPassword(String pass){
         WebElementFacade field_password_user = find(By.xpath(password_user));
 
         field_password_user.type(pass);
     }
 
-    public Boolean login_result(){
+    public Boolean loginResult(){
         WebElementFacade status = find(By.xpath(label));
 
         return status.isDisplayed();
     }
 
-    public void login_now(){
+    public void loginNow(){
         WebDriver webDriver = getDriver();
         WebElement loginButton = webDriver.findElement(By.xpath(btn_for_login));
         Actions action = new Actions(webDriver);
@@ -204,14 +199,14 @@ public class BlibliPage extends PageObject{
 
     }
 
-    public void scroll_the_page(int x, int y) throws Exception {
+    public void scrollThePage(int x, int y) throws Exception {
         WebDriver webDriver = getDriver();
 
         JavascriptExecutor jse = (JavascriptExecutor) webDriver;
         jse.executeScript("window.scrollBy("+x+","+y+")", "");
     }
 
-    public void scroll_until_the_visibility_of(String xpath) throws Exception {
+    public void scrollUntilTheVisibilityOf(String xpath) throws Exception {
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -250,7 +245,7 @@ public class BlibliPage extends PageObject{
         return webDriver.getCurrentUrl().equals("https://www.blibli.com");
     }
 
-    public String search_result(String def){
+    public String searchResult(String def){
         WebDriver webDriver = getDriver();
         WebElement isFound = null;
         try {
@@ -273,7 +268,7 @@ public class BlibliPage extends PageObject{
             }
     }
 
-    public Boolean search_not_found(){
+    public Boolean searchNotFound(){
         WebElement isFound = null;
         WebDriver webDriver = getDriver();
         try {
@@ -285,7 +280,7 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public void is_searching(String search_terms){
+    public void isSearching(String search_terms){
         WebElementFacade to_search = find(By.xpath(search_field));
 
         to_search.type(search_terms);
@@ -299,13 +294,13 @@ public class BlibliPage extends PageObject{
         return definitionsListPage.getText();
     }
 
-    public void hit_enter_when_searching(){
+    public void hitEnterWhenSearching(){
         WebElementFacade to_search = find(By.xpath(search_field));
 
         to_search.sendKeys(Keys.RETURN);
     }
 
-    public void hit_the_search_button(){
+    public void hitTheSearchButton(){
         WebDriver webDriver = getDriver();
         WebElement btn_search = webDriver.findElement(By.xpath(search_button));
 
@@ -316,7 +311,7 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public void click_an_item(){
+    public void clickAnItem(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -328,7 +323,7 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public void buy_that_item_for(int jumlah){
+    public void buyThatItemFor(int jumlah){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -344,7 +339,7 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public void process_the_order(){
+    public void processTheOrder(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -355,7 +350,7 @@ public class BlibliPage extends PageObject{
 
         WebElement btn_checkout = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_checkout)));
         try {
-            scroll_until_the_visibility_of(al_checkout);
+            scrollUntilTheVisibilityOf(al_checkout);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -363,7 +358,7 @@ public class BlibliPage extends PageObject{
         btn_checkout.click();
     }
 
-    public void lanjutkan_pembayaran(){
+    public void lanjutkanPembayaran(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -371,7 +366,7 @@ public class BlibliPage extends PageObject{
 
         WebElement btn_lanjut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_lanjutkan)));
         try {
-            scroll_until_the_visibility_of(al_lanjutkan);
+            scrollUntilTheVisibilityOf(al_lanjutkan);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -379,7 +374,7 @@ public class BlibliPage extends PageObject{
         btn_lanjut.click();
     }
 
-    public void pilih_metode_pembayaran(String method, String opt, int sub_opt){
+    public void pilihMetodePembayaran(String method, String opt, int sub_opt){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -422,7 +417,7 @@ public class BlibliPage extends PageObject{
 
         WebElement method_to_click = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_to_click)));
         try {
-            scroll_until_the_visibility_of(al_method_to_click);
+            scrollUntilTheVisibilityOf(al_method_to_click);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -433,7 +428,7 @@ public class BlibliPage extends PageObject{
         }else if(status == 1){
             WebElement method_opt = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_opt)));
             try {
-                scroll_until_the_visibility_of(al_method_opt);
+                scrollUntilTheVisibilityOf(al_method_opt);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -449,7 +444,7 @@ public class BlibliPage extends PageObject{
         }else{
             WebElement method_opt = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_method_opt)));
             try {
-                scroll_until_the_visibility_of(al_method_opt);
+                scrollUntilTheVisibilityOf(al_method_opt);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -460,7 +455,7 @@ public class BlibliPage extends PageObject{
 
         WebElement btn_check_out = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_btn_check_out)));
         try {
-            scroll_until_the_visibility_of(al_btn_check_out);
+            scrollUntilTheVisibilityOf(al_btn_check_out);
             Coordinates coordinate = ((Locatable)btn_check_out).getCoordinates();
             coordinate.onPage();
             coordinate.inViewPort();
@@ -484,7 +479,7 @@ public class BlibliPage extends PageObject{
         captcha.click();
     }
 
-    public void verifikasi_nanti(){
+    public void verifikasiNanti(){
         WebDriver webDriver = getDriver();
         WebElementFacade later = find(By.xpath(verifikasi_nanti));
 
@@ -497,7 +492,7 @@ public class BlibliPage extends PageObject{
         popup.click();
     }
 
-    public Boolean is_in_verification_page(){
+    public Boolean isInVerificationPage(){
         WebDriver webDriver = getDriver();
         try {
 
@@ -508,7 +503,7 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public void user_want_to_sign_up(){
+    public void userWantToSignUp(){
         WebDriver webDriver =  getDriver();
 
         WebElement btn_sign_up = webDriver.findElement(By.xpath(signup));
@@ -516,7 +511,7 @@ public class BlibliPage extends PageObject{
         btn_sign_up.click();
     }
 
-    public void insert_identity(String email, String pass){
+    public void insertIdentity(String email, String pass){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -533,7 +528,7 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public Boolean check_is_signed_in(){
+    public Boolean checkIsSignedIn(){
         WebDriver webDriver = getDriver();
 
         WebElement is_signed =  webDriver.findElement(By.xpath(the_signed_user));
@@ -541,19 +536,19 @@ public class BlibliPage extends PageObject{
         return is_signed.isDisplayed();
     }
 
-    public Boolean user_is_in_the_profile_page(){
+    public Boolean userIsInTheProfilePage(){
         WebDriver webDriver = getDriver();
 
         return webDriver.getCurrentUrl().equals(profile_url);
     }
 
-    public void fill_fulname(String fullname){
+    public void fillFulname(String fullname){
         WebElementFacade name = find(By.xpath(full_name));
 
         name.type(fullname);
     }
 
-    public void fill_date_of_birth(String day, String month, String year){
+    public void fillDateOfBirth(String day, String month, String year){
         WebDriver driver = getDriver();
 
         Select dayBirth = new Select(driver.findElement(By.xpath(day_birth)));
@@ -569,13 +564,13 @@ public class BlibliPage extends PageObject{
         yearBirth.selectByVisibleText(year);
     }
 
-    public void fill_phone_number(String phone_number){
+    public void fillPhoneNumber(String phone_number){
         WebElementFacade phone = find(By.xpath(number_phone));
 
         phone.type(phone_number);
     }
 
-    public void select_gender(String gender){
+    public void selectGender(String gender){
         if(gender.equals("male")){
             WebElementFacade klikmale = find(By.xpath(klik_pria));
             klikmale.click();
@@ -586,12 +581,12 @@ public class BlibliPage extends PageObject{
         }
     }
 
-    public void click_save_button(){
+    public void clickSaveButton(){
         WebElementFacade kliksaveprofile = find(By.xpath(simpan_profile));
         kliksaveprofile.click();
     }
 
-    public void click_user_profile_section(String menu){
+    public void clickUserProfileSection(String menu){
         String menu_to_click = "//body//*[@id='blibli-main-ctrl']//section//ul//li//*[span[contains(text(),'"+menu+"')]]";
 
         WebDriver webDriver = getDriver();
@@ -603,14 +598,14 @@ public class BlibliPage extends PageObject{
         choosen_menu.click();
     }
 
-    public void click_edit_alamat(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone ){
+    public void clickEditAlamat(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone ){
         String to_click = "//body//*[@id='blibli-main-ctrl']/section//div//a[contains(text(),'Edit Alamat')]";
         String popup_edit_alamat = "//*[body[@class='modal-open']]//*[div[@class='modal fade in']]//*[@id='edit-address']/div/div";
 
         WebDriver webDriver = getDriver();
         Actions action = new Actions(webDriver);
 
-        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        WebDriverWait wait = new WebDriverWait(webDriver, 20);
 
         WebElement link_toclick = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(to_click)));
 
@@ -645,24 +640,36 @@ public class BlibliPage extends PageObject{
             input_alamat.sendKeys(alamat);
 
             WebElement the_prov = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_provinsi)));
-            the_prov.click();
-            Select prov = new Select(webDriver.findElement(By.xpath(field_provinsi)));
-            prov.selectByVisibleText(provinsi);
+            ((JavascriptExecutor) webDriver).executeScript(js, the_prov);
+            if (the_prov.isDisplayed()) {
+                the_prov.click();
+                Select prov = new Select(webDriver.findElement(By.xpath(field_provinsi)));
+                prov.selectByVisibleText(provinsi);
+            }
 
             WebElement the_city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
-            the_city.click();
-            Select city = new Select(webDriver.findElement(By.xpath(field_kota)));
-            city.selectByVisibleText(kota);
+            ((JavascriptExecutor) webDriver).executeScript(js, the_city);
+            if (the_city.isDisplayed()) {
+                the_city.click();
+                Select city = new Select(webDriver.findElement(By.xpath(field_kota)));
+                city.selectByVisibleText(kota);
+            }
 
             WebElement the_kec = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kecamatan)));
-            the_kec.click();
-            Select kec = new Select(webDriver.findElement(By.xpath(field_kecamatan)));
-            kec.selectByVisibleText(kecamatan);
+            ((JavascriptExecutor) webDriver).executeScript(js, the_kec);
+            if (the_kec.isDisplayed()) {
+                the_kec.click();
+                Select kec = new Select(webDriver.findElement(By.xpath(field_kecamatan)));
+                kec.selectByVisibleText(kecamatan);
+            }
 
             WebElement the_kel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kelurahan)));
-            the_kel.click();
-            Select kel = new Select(webDriver.findElement(By.xpath(field_kelurahan)));
-            kel.selectByVisibleText(kelurahan);
+            ((JavascriptExecutor) webDriver).executeScript(js, the_kel);
+            if (the_kel.isDisplayed()) {
+                the_kel.click();
+                Select kel = new Select(webDriver.findElement(By.xpath(field_kelurahan)));
+                kel.selectByVisibleText(kelurahan);
+            }
 
             WebElement input_email = webDriver.findElement(By.xpath(field_email));
             ((JavascriptExecutor) webDriver).executeScript(js, input_email);
@@ -681,7 +688,7 @@ public class BlibliPage extends PageObject{
 
     }
 
-    public Boolean check_is_the_default_alamat_saved(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+    public Boolean checkIsTheDefaultAlamatSaved(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
         String component_to_wait = "//body//*[@id='blibli-main-ctrl']//section//*[div[@class='single-address default-address']]//div";
         Boolean result = false;
         WebDriver webDriver = getDriver();
@@ -735,7 +742,7 @@ public class BlibliPage extends PageObject{
         return result;
     }
 
-    public void open_pesanan_details(String choosen_tab){
+    public void openPesananDetails(String choosen_tab){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -745,7 +752,7 @@ public class BlibliPage extends PageObject{
         tab_to_click.click();
     }
 
-    public Boolean check_the_order_validity(){
+    public Boolean checkTheOrderValidity(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
         Boolean check_code_payment = false;
@@ -769,7 +776,7 @@ public class BlibliPage extends PageObject{
 
     }
 
-    public void get_transaction_details(){
+    public void getTransactionDetails(){
         String al_code_payment = "//body//*[@id='blibli-main-ctrl']/section/div/section//div[@class='total-payment']//div//div[@class='layer']";
         String al_code_transaction = "//body//*[@id='blibli-main-ctrl']/section/div/section//div//span[@class='ordernumber']/strong";
 
@@ -778,13 +785,13 @@ public class BlibliPage extends PageObject{
 
         WebElement code_payment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_payment)));
         try {
-            scroll_until_the_visibility_of(al_code_payment);
+            scrollUntilTheVisibilityOf(al_code_payment);
         } catch (Exception e) {
             e.printStackTrace();
         }
         WebElement code_transaction = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
         try {
-            scroll_until_the_visibility_of(al_code_transaction);
+            scrollUntilTheVisibilityOf(al_code_transaction);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -793,7 +800,7 @@ public class BlibliPage extends PageObject{
 
     }
 
-    public void batalkan_pesanan(){
+    public void batalkanPesanan(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -801,7 +808,7 @@ public class BlibliPage extends PageObject{
 
         WebElement btn_to_click = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
         try {
-            scroll_until_the_visibility_of(al_code_transaction);
+            scrollUntilTheVisibilityOf(al_code_transaction);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -812,7 +819,7 @@ public class BlibliPage extends PageObject{
         btn_yes.click();
 
     }
-    public void check_the_email_inbox(String email_to_check){
+    public void checkTheEmailInbox(String email_to_check){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 30);
 

@@ -3,16 +3,8 @@ package com.blibli.test.steps.actor;
 import com.blibli.test.pages.BlibliPage;
 import com.blibli.test.pages.MailinatorPage;
 import com.blibli.test.pages.MobileAppsPage;
-import javafx.beans.property.StringProperty;
 import net.thucydides.core.annotations.Step;
-import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.steps.ScenarioSteps;
-import org.apache.xpath.operations.Bool;
-import org.jruby.RubyBoolean;
-import org.jruby.RubyProcess;
-import org.yecht.Data;
-
-import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,277 +21,277 @@ public class User extends ScenarioSteps {
     MailinatorPage mailinator;
 
     @Step
-    public void enter_username(String username){
-        mainpage.enter_a_username(username);
+    public void enterUsername(String username){
+        mainpage.enterAUsername(username);
     }
 
     @Step
-    public void enter_password(String password){
-        mainpage.enter_a_password(password);
+    public void enterPassword(String password){
+        mainpage.enterAPassword(password);
     }
 
     @Step
     public void login(){
-        mainpage.login_now();
+        mainpage.loginNow();
     }
 
     @Step
-    public void see_the_result(){
-        assertTrue(mainpage.login_result());
+    public void seeTheResult(){
+        assertTrue(mainpage.loginResult());
     }
 
     @Step
-    public void should_see_page(String defin){
+    public void shouldSeePage(String defin){
         assertThat(mainpage.getDefinitionsPage(defin), containsString(defin));
     }
 
     @Step
-    public void open_a_page(String page){
+    public void openAPage(String page){
         mainpage.init(page);
     }
 
     @Step
-    public void do_a_scroll(int x, int y) throws Exception{
-        mainpage.scroll_the_page(x,y);
+    public void doAScroll(int x, int y) throws Exception{
+        mainpage.scrollThePage(x,y);
     }
 
     @Step
-    public void do_a_scroll_until_visibility_of(String xpath) throws Exception{
-        mainpage.scroll_until_the_visibility_of(xpath);
+    public void doAScrollUntilVisibilityOf(String xpath) throws Exception{
+        mainpage.scrollUntilTheVisibilityOf(xpath);
     }
 
     @Step
-    public void i_want_to_buy_that(int jumlah){
-        mainpage.buy_that_item_for(jumlah);
+    public void iWantToBuyThat(int jumlah){
+        mainpage.buyThatItemFor(jumlah);
     }
 
     @Step
-    public void then_process_the_transaction(){
-        mainpage.process_the_order();
+    public void thenProcessTheTransaction(){
+        mainpage.processTheOrder();
     }
 
     @Step
-    public void open_pesanan_details(String tab){
-        mainpage.open_pesanan_details(tab);
+    public void openPesananDetails(String tab){
+        mainpage.openPesananDetails(tab);
     }
 
     @Step
-    public void check_order_validity(){
-        assertTrue(mainpage.check_the_order_validity());
+    public void checkOrderValidity(){
+        assertTrue(mainpage.checkTheOrderValidity());
     }
 
     @Step
-    public void open_mail_user(String email){
-        mainpage.check_the_email_inbox(email);
+    public void openMailUser(String email){
+        mainpage.checkTheEmailInbox(email);
     }
 
     @Step
-    public void open_email_order_from_blibli(){
-        mailinator.open_email_order_from_blibli();
-        assertTrue(mailinator.check_the_transaction());
+    public void openEmailOrderFromBlibli(){
+        mailinator.openEmailOrderFromBlibli();
+        assertTrue(mailinator.checkTheTransaction());
     }
 
     @Step
-    public void switch_to_tab(int x){
-        mainpage.switch_to_tab(x);
+    public void switchToTab(int x){
+        mainpage.switchToTab(x);
     }
 
     @Step
-    public void cancel_order(){
-        mainpage.batalkan_pesanan();
+    public void cancelOrder(){
+        mainpage.batalkanPesanan();
     }
 
     @Step
-    public void then_choose_to_proceed_the_payment(){
-        mainpage.lanjutkan_pembayaran();
+    public void thenChooseToProceedThePayment(){
+        mainpage.lanjutkanPembayaran();
     }
 
     @Step
-    public void user_get_order_details(){
-        mainpage.get_transaction_details();
+    public void userGetOrderDetails(){
+        mainpage.getTransactionDetails();
     }
 
     @Step
-    public void then_choose_the_payment_method(String method, String opt, int sub_opt){
-        mainpage.pilih_metode_pembayaran(method, opt, sub_opt);
+    public void thenChooseThePaymentMethod(String method, String opt, int sub_opt){
+        mainpage.pilihMetodePembayaran(method, opt, sub_opt);
     }
 
     @Step
-    public void delete_email(){
-        mailinator.user_delete_email();
+    public void deleteEmail(){
+        mailinator.userDeleteEmail();
     }
 
     @Step
-    public void user_open_mailinator(){
-        mailinator.switch_to_mailinator();
+    public void userOpenMailinator(){
+        mailinator.switchToMailinator();
     }
 
     @Step
-    public void is_the_mailinator(){
-        assertTrue( mailinator.check_the_mailinator_page());
+    public void isTheMailinator(){
+        assertTrue( mailinator.checkTheMailinatorPage());
     }
 
     @Step
-    public void now_the_user_clicked_login(){
-        mainpage.user_choose_to_login();
+    public void nowTheUserClickedLogin(){
+        mainpage.userChooseToLogin();
     }
 
     @Step
-    public void now_close_the_pop_up(){
+    public void nowCloseThePopUp(){
         mainpage.closePopUp();
     }
 
     @Step
-    public void user_click_sign_up(){
-        mainpage.user_want_to_sign_up();
+    public void userClickSignUp(){
+        mainpage.userWantToSignUp();
     }
 
     @Step
-    public void user_inputing_identity(String email, String password){
-        mainpage.insert_identity(email,password);
+    public void userInputingIdentity(String email, String password){
+        mainpage.insertIdentity(email,password);
     }
 
     @Step
-    public void check_in_the_verification_page(){
-        if(mainpage.is_in_verification_page()){
+    public void checkInTheVerificationPage(){
+        if(mainpage.isInVerificationPage()){
             System.out.println("This is the first attempt of the user to sign up");
-            verify_later();
+            verifyLater();
         }else{
             System.out.println("User has been choosing to verify later");
         }
     }
 
     @Step
-    public void check_is_signed_up(){
-        assertTrue(mainpage.check_is_signed_in());
+    public void checkIsSignedUp(){
+        assertTrue(mainpage.checkIsSignedIn());
     }
 
     @Step
-    public void menu_to_click_in_user_profile_page(String menu){
-        mainpage.click_user_profile_section(menu);
+    public void menuToClickInUserProfilePage(String menu){
+        mainpage.clickUserProfileSection(menu);
     }
 
     @Step
-    public void update_alamat_user(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
-        mainpage.click_edit_alamat(nama_lengkap, alamat, provinsi, kota, kecamatan, kelurahan, email, handphone );
+    public void updateAlamatUser(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+        mainpage.clickEditAlamat(nama_lengkap, alamat, provinsi, kota, kecamatan, kelurahan, email, handphone );
     }
 
     @Step
-    public void check_is_in_the_home_page(){
+    public void checkIsInTheHomePage(){
         assertTrue(mainpage.checkHome());
     }
 
     @Step
-    public void is_in_the_profile_page(){
-        assertTrue(mainpage.user_is_in_the_profile_page());
+    public void isInTheProfilePage(){
+        assertTrue(mainpage.userIsInTheProfilePage());
     }
 
     @Step
-    public void to_check_the_update_on_default_alamat(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
-        assertTrue(mainpage.check_is_the_default_alamat_saved(nama_lengkap,alamat,provinsi,kota,kecamatan,kelurahan,email,handphone));
+    public void toCheckTheUpdateOnDefaultAlamat(String nama_lengkap, String alamat, String provinsi, String kota, String kecamatan, String kelurahan, String email, String handphone){
+        assertTrue(mainpage.checkIsTheDefaultAlamatSaved(nama_lengkap,alamat,provinsi,kota,kecamatan,kelurahan,email,handphone));
     }
 
     @Step
-    public void verify_later(){
+    public void verifyLater(){
 //        mainpage.click_recapthca();
-        mainpage.verifikasi_nanti();
+        mainpage.verifikasiNanti();
     }
 
     @Step
-    public void user_attempt_to_login(String username, String password){
-        now_the_user_clicked_login();
-        enter_username(username);
-        enter_password(password);
+    public void userAttemptToLogin(String username, String password){
+        nowTheUserClickedLogin();
+        enterUsername(username);
+        enterPassword(password);
         login();
     }
 
     @Step
-    public void user_want_to_hover(String menu, String submenu){
+    public void userWantToHover(String menu, String submenu){
         mainpage.hovering(menu,submenu);
     }
 
     @Step
-    public void get_the_new_tab(String newtab){
+    public void getTheNewTab(String newtab){
         assertTrue(mobilepage.checkTab(newtab));
     }
 
     @Step
-    public void close_the_tab(){
-        mobilepage.close_this_tab();
+    public void closeTheTab(){
+        mobilepage.closeThisTab();
     }
 
     @Step
-    public void back_to_homepage(){
-        mobilepage.back_to_firstTab();
+    public void backToHomepage(){
+        mobilepage.backToFirstTab();
     }
 
     @Step
-    public void user_get_the_search_result(String search_param, int x){
+    public void userGetTheSearchResult(String search_param, int x){
         if(x==1){
-            assertThat(mainpage.search_result(search_param), containsString(search_param));
+            assertThat(mainpage.searchResult(search_param), containsString(search_param));
         }else{
-            assertTrue(mainpage.search_not_found());
+            assertTrue(mainpage.searchNotFound());
         }
     }
 
     @Step
-    public void do_searching(String search_param){
-        mainpage.is_searching(search_param);
+    public void doSearching(String search_param){
+        mainpage.isSearching(search_param);
     }
 
     @Step
-    public void user_hit_enter_on_search_field(){
-        mainpage.hit_enter_when_searching();
+    public void userHitEnterOnSearchField(){
+        mainpage.hitEnterWhenSearching();
     }
 
     @Step
-    public void user_clicked_button_search(){
-        mainpage.hit_the_search_button();
+    public void userClickedButtonSearch(){
+        mainpage.hitTheSearchButton();
     }
 
     @Step
-    public void user_attempt_to_search(int x, String param){
+    public void userAttemptToSearch(int x, String param){
         if(x==1){
-            do_searching(param);
-            user_hit_enter_on_search_field();
+            doSearching(param);
+            userHitEnterOnSearchField();
         }else{
-            do_searching(param);
-            user_clicked_button_search();
+            doSearching(param);
+            userClickedButtonSearch();
         }
     }
 
     @Step
-    public void fill_profile_fullname(String fullname){
-        mainpage.fill_fulname(fullname);
+    public void fillProfileFullname(String fullname){
+        mainpage.fillFulname(fullname);
     }
 
     @Step
-    public void fill_profile_birthday(String day, String month, String year){
-        mainpage.fill_date_of_birth(day,month,year);
+    public void fillProfileBirthday(String day, String month, String year){
+        mainpage.fillDateOfBirth(day,month,year);
     }
 
     @Step
-    public void fill_profile_phone_number(String phone_number){
-        mainpage.fill_phone_number(phone_number);
+    public void fillProfilePhoneNumber(String phone_number){
+        mainpage.fillPhoneNumber(phone_number);
     }
 
     @Step
-    public void fill_profile_gender(String gender){
-        mainpage.select_gender(gender);
+    public void fillProfileGender(String gender){
+        mainpage.selectGender(gender);
     }
 
     @Step
-    public void hit_save_button(){
-        mainpage.click_save_button();
+    public void hitSaveButton(){
+        mainpage.clickSaveButton();
     }
 
     @Step
-    public void select_an_item(){
-        mainpage.click_an_item();
+    public void selectAnItem(){
+        mainpage.clickAnItem();
     }
 
     @Step
-    public void should_see_description(String defin){
+    public void shouldSeeDescription(String defin){
         assertThat(mainpage.getDefinitionsofDescription(defin), containsString(defin));
     }
 }

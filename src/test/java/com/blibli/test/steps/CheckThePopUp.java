@@ -13,18 +13,18 @@ public class CheckThePopUp {
     User actor;
 
     @Given("The popup is still exist user choose to '$stat'")
-    public void user_is_in_the_homepage(String stat){
+    public void userIsInTheHomepage(String stat){
         if(stat.equals("close")){
-            actor.now_close_the_pop_up();
+            actor.nowCloseThePopUp();
         }else{
 
         }
     }
 
     @When("The user want to '$stat' the popup")
-    public void user_choose_to_close_the_popup(String stat){
+    public void userChooseToCloseThePopup(String stat){
         if(stat.equals("close")){
-            actor.now_close_the_pop_up();
+            actor.nowCloseThePopUp();
         }
 
     }

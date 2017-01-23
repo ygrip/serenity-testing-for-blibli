@@ -10,8 +10,8 @@ GivenStories: stories/update_profile_attempt/UpdateStoryTest.story
 Scenario: user is searching a product and then hit enter when the popup still block the search button
 Meta:
 Given The popup is still exist user choose to 'close'
-When The user is searching for 'iPhone' and then the user do 'enter'
-Then The user should see the search result of 'iPhone'
+When The user is searching for 'Nokia' and then the user do 'enter'
+Then The user should see the search result of 'Nokia'
 
 Scenario: user is searching invalid product and then hit enter when the popup still block the search button
 Meta: @skip

@@ -32,7 +32,7 @@ public class MobileAppsPage extends PageObject{
         return result;
     }
 
-    public void close_this_tab(){
+    public void closeThisTab(){
         WebDriver webDriver = getDriver();
         ArrayList<String> newTab = new ArrayList<String>(webDriver.getWindowHandles());
 
@@ -40,7 +40,7 @@ public class MobileAppsPage extends PageObject{
         webDriver.close();
     }
 
-    public void back_to_firstTab(){
+    public void backToFirstTab(){
         WebDriver webDriver = getDriver();
 
         ArrayList<String> newTab = new ArrayList<String>(webDriver.getWindowHandles());

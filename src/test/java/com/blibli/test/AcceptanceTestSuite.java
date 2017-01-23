@@ -13,7 +13,7 @@ public class AcceptanceTestSuite extends SerenityStories {
     WebDriver driver;
 
     public AcceptanceTestSuite(){
-//        runSerenity().inASingleSession();
+           runSerenity().inASingleSession();
     }
 
     @Override

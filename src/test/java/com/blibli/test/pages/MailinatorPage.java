@@ -4,15 +4,10 @@ import com.blibli.test.order.OrderDetails;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.ArrayList;
 
 /**
  * Created by Yunaz on 1/19/2017.
@@ -24,14 +19,15 @@ public class MailinatorPage extends PageObject{
     private String btn_verifikasi = ".//*[@id='templateUpperBody']//table//span//a[contains(text(),'Verifikasi Nomor Handphone')]";
     private String al_checkbox = "//body//div[@ng-repeat='email in emails']//div//label";
     OrderDetails order;
+    BlibliPage mainpage;
 
-    public void switch_to_mailinator(){
+    public void switchToMailinator(){
         WebDriver webDriver = getDriver();
 
         webDriver.navigate().to(url_mail);
     }
 
-    public Boolean check_the_mailinator_page(){
+    public Boolean checkTheMailinatorPage(){
         WebDriver webDriver = getDriver();
 
         if(webDriver.getCurrentUrl().equals(url_mail)){
@@ -41,7 +37,7 @@ public class MailinatorPage extends PageObject{
         }
     }
 
-    public void user_click_the_go_button(){
+    public void userClickTheGoButton(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
@@ -49,35 +45,50 @@ public class MailinatorPage extends PageObject{
         btn_go.click();
     }
 
-    public void open_email_from_blibli(){
+    public void openEmailFromBlibli(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
         WebElement email = find(By.xpath(email_from_blibli));
         email.click();
     }
 
-    public void open_email_order_from_blibli(){
+    public void openEmailOrderFromBlibli(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
-        WebElement email = find(By.xpath(email_order_from_blibli));
+        WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(email_order_from_blibli)));
         email.click();
     }
 
-    public Boolean check_the_transaction(){
-        String al_no_rek = "//body//*[@id='templateUpperBody']/table[2]/tbody/tr/td/table/tbody/tr/td/span/span/strong[3]";
+    public Boolean checkTheTransaction(){
+        String al_no_rek = ".//*[@id='templateUpperBody']/table[2]/tbody/tr/td/table/tbody/tr/td/span/span/strong[3]";
+        String al_iframe = ".//*[@id='publicshowmaildivcontent']";
         WebDriver webDriver = getDriver();
-        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        WebDriverWait wait = new WebDriverWait(webDriver, 20);
+
+
+        WebElement iframe = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_iframe)));
+        webDriver.switchTo().frame(iframe);
+
         WebElement no_rek = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_no_rek)));
-        return no_rek.getText().equals(OrderDetails.no_rekening);
+        try {
+            mainpage.scrollUntilTheVisibilityOf(al_no_rek);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String the_no_rek = no_rek.getText();
+        String handle = webDriver.getWindowHandle();
+
+        webDriver.switchTo().window(handle);
+        return the_no_rek.equals(OrderDetails.no_rekening);
     }
 
-    public void user_clicked_verifikasi(){
+    public void userClickedVerifikasi(){
         WebElementFacade btn_ver = find(By.xpath(btn_verifikasi));
 
         btn_ver.click();
     }
 
-    public void user_delete_email(){
+    public void userDeleteEmail(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 

@@ -13,22 +13,22 @@ public class OpenMailininator {
     User actor;
 
     @When("User want to open the mailinator page")
-    public void open_the_mailinator_page(){
-        actor.user_open_mailinator();
+    public void openTheMailinatorPage(){
+        actor.userOpenMailinator();
     }
 
     @Then("The user should see the mailinator web page")
-    public void check_is_the_mailinator(){
-        actor.is_the_mailinator();
+    public void checkIsTheMailinator(){
+        actor.isTheMailinator();
     }
 
     @When("The user want to open inbox in their account : '$account'")
-    public void open_inbox(String email){
-        actor.open_mail_user(email);
+    public void openInbox(String email){
+        actor.openMailUser(email);
     }
 
     @Then("The user want to delete the email")
     public void delete_mail_in_mailinator(){
-        actor.delete_email();
+        actor.deleteEmail();
     }
 }

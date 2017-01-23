@@ -13,6 +13,6 @@ public class ClickAnItem {
 
     @When("i click the item")
     public void WhenIClickTheeItem(){
-        actor.select_an_item();
+        actor.selectAnItem();
     }
 }
