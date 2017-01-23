@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.sql.Driver;
+
 /**
  * Created by Yunaz on 1/19/2017.
  */
@@ -90,9 +92,10 @@ public class MailinatorPage extends PageObject{
 
     public void userDeleteEmail(){
         WebDriver webDriver = getDriver();
-        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        WebDriverWait wait = new WebDriverWait(webDriver, 20);
+        webDriver.switchTo().defaultContent();
 
-        String al_btn_delete = "//button//*[@id='public_delete_button']";
+        String al_btn_delete = "//body//*[@id='public_delete_button']";
 
         WebElement btn_delete = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_btn_delete)));
         btn_delete.click();

@@ -341,10 +341,22 @@ public class BlibliPage extends PageObject{
 
     public void processTheOrder(){
         WebDriver webDriver = getDriver();
-        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        String url_chart = "https://www.blibli.com/cart";
+        WebDriverWait wait = new WebDriverWait(webDriver, 20);
+        Actions action = new Actions(webDriver);
 
         WebElement btn_bag = wait.until((ExpectedConditions.visibilityOfElementLocated(By.xpath(al_bag_belanja))));
-        btn_bag.click();
+        action.moveToElement(btn_bag).click().build().perform();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(!webDriver.getCurrentUrl().equals(url_chart)){
+            webDriver.navigate().to(url_chart);
+        }
 
         String al_checkout = "//body//*[@id='gdn-sb-page-continue-checkout']";
 
@@ -550,15 +562,22 @@ public class BlibliPage extends PageObject{
 
     public void fillDateOfBirth(String day, String month, String year){
         WebDriver driver = getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
+        WebElement field_dayBirth = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(day_birth)));
+        field_dayBirth.click();
         Select dayBirth = new Select(driver.findElement(By.xpath(day_birth)));
         //dayBirth.deselectAll();
         dayBirth.selectByVisibleText(day);
 
+        WebElement field_monthBirth = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(month_birth)));
+        field_monthBirth.click();
         Select monthBirth = new Select(driver.findElement(By.xpath(month_birth)));
         //monthBirth.deselectAll();
         monthBirth.selectByVisibleText(month);
 
+        WebElement field_yearBirth = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(year_birth)));
+        field_yearBirth.click();
         Select yearBirth = new Select(driver.findElement(By.xpath(year_birth)));
         //yearBirth.deselectAll();
         yearBirth.selectByVisibleText(year);
@@ -646,6 +665,11 @@ public class BlibliPage extends PageObject{
                 Select prov = new Select(webDriver.findElement(By.xpath(field_provinsi)));
                 prov.selectByVisibleText(provinsi);
             }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             WebElement the_city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
             ((JavascriptExecutor) webDriver).executeScript(js, the_city);
@@ -653,6 +677,11 @@ public class BlibliPage extends PageObject{
                 the_city.click();
                 Select city = new Select(webDriver.findElement(By.xpath(field_kota)));
                 city.selectByVisibleText(kota);
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             WebElement the_kec = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kecamatan)));
@@ -662,6 +691,11 @@ public class BlibliPage extends PageObject{
                 Select kec = new Select(webDriver.findElement(By.xpath(field_kecamatan)));
                 kec.selectByVisibleText(kecamatan);
             }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             WebElement the_kel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kelurahan)));
             ((JavascriptExecutor) webDriver).executeScript(js, the_kel);
@@ -669,6 +703,11 @@ public class BlibliPage extends PageObject{
                 the_kel.click();
                 Select kel = new Select(webDriver.findElement(By.xpath(field_kelurahan)));
                 kel.selectByVisibleText(kelurahan);
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             WebElement input_email = webDriver.findElement(By.xpath(field_email));
@@ -781,7 +820,13 @@ public class BlibliPage extends PageObject{
         String al_code_transaction = "//body//*[@id='blibli-main-ctrl']/section/div/section//div//span[@class='ordernumber']/strong";
 
         WebDriver webDriver = getDriver();
-        WebDriverWait wait = new WebDriverWait(webDriver, 10);
+        WebDriverWait wait = new WebDriverWait(webDriver, 20);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         WebElement code_payment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_payment)));
         try {
