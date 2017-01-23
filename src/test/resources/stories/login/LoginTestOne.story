@@ -5,7 +5,7 @@ As a user
 I want to perform an action to login in the website
 So that I can do more things in the website
 
-GivenStories: stories/open_blibli_page_attempt/OpenBlibli.story
+GivenStories: stories/blibli/OpenBlibli.story
 
 Scenario: user is attempting login by inputing random username and password
 Meta: @skip

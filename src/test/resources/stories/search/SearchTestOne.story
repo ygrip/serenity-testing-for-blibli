@@ -5,7 +5,7 @@ As a user
 I want to perform an action to search a product in the website
 So that I can know the information of the product that i searched in the website
 
-GivenStories: stories/update_profile_attempt/UpdateStoryTest.story
+GivenStories: stories/profile/UpdateStoryTest.story
 
 Scenario: user is searching a product and then hit enter when the popup still block the search button
 Meta:

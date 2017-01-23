@@ -5,7 +5,7 @@ As a new user
 I want to register
 So that I can do more things in the website
 
-GivenStories: stories/open_blibli_page_attempt/OpenBlibli.story
+GivenStories: stories/blbli/OpenBlibli.story
 
 Scenario: The user now want to sign up as new user
 Given The popup is still exist user choose to 'close'

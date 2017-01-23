@@ -6,7 +6,7 @@ I want to perform an action
 So that I can achieve a business goal
 
 Story: Add to Cart
-GivenStories: stories/search_attempt/SearchTestOne.story
+GivenStories: stories/search/SearchTestOne.story
 
 Scenario: add a goods in the cart
 Given i have searched for local items containing 'Nokia'

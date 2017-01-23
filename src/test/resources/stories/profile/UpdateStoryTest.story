@@ -4,7 +4,7 @@ Narrative:
 As a registered user
 I want to update my profile
 So that I can set detailed information about my profile
-GivenStories: stories/sign_up_attempt/SignUpTest.story
+GivenStories: stories/register/SignUpTest.story
 
 Scenario: The user want to update their profile and click the Buku Alamat section
 When The user hover over a menu 'User' and then click the submenu 'Profil'

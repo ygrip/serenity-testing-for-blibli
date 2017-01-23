@@ -5,7 +5,7 @@ As a user
 I want to hover a menu
 So that I can choose the sub menu from the drop down list
 
-GivenStories: stories/open_blibli_page_attempt/OpenBlibli.story
+GivenStories: stories/blibli/OpenBlibli.story
 
 Scenario: The user is hovering the mobile app item and then clicked the Windows link
 When The user hover over a menu 'Mobile' and then click the submenu 'Windows'
