@@ -92,6 +92,12 @@ public class User extends ScenarioSteps {
     }
 
     @Step
+    public void openEmailCancelOrderFromBlibli(){
+        mailinator.openEmailCancelOrderFromBlibli();
+        assertTrue(mailinator.checkTheCancelledTransaction());
+    }
+
+    @Step
     public void switchToTab(int x){
         mainpage.switchToTab(x);
     }

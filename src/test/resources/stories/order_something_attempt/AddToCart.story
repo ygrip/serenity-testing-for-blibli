@@ -28,3 +28,7 @@ Given The user is on the 'https://www.blibli.com/'
 When The user hover over a menu 'User' and then click the submenu 'Pesanan'
 And The user want to cancel their order
 And The user select the 'Pesanan Batal' option
+Given The user is on the 'https://www.mailinator.com/'
+When The user want to open inbox in their account : 'akuYunaz@mailinator.com'
+Then The user should see their email order was cancelled
+And The user want to delete the email

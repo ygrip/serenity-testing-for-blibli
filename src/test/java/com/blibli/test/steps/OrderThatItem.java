@@ -49,8 +49,13 @@ public class OrderThatItem {
         actor.openEmailOrderFromBlibli();
     }
 
+    @Then("The user should see their email order was cancelled")
+    public void checkTheEmailCancelOrder(){
+        actor.openEmailCancelOrderFromBlibli();
+    }
+
     @When("The user want to cancel their order")
-    public void cancelOrder(){
+    public void cancelTheOrder(){
         actor.cancelOrder();
     }
 
