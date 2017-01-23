@@ -654,12 +654,12 @@ public class BlibliPage extends PageObject{
             Select city = new Select(webDriver.findElement(By.xpath(field_kota)));
             city.selectByVisibleText(kota);
 
-            WebElement the_kec = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
+            WebElement the_kec = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kecamatan)));
             the_kec.click();
             Select kec = new Select(webDriver.findElement(By.xpath(field_kecamatan)));
             kec.selectByVisibleText(kecamatan);
 
-            WebElement the_kel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kota)));
+            WebElement the_kel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(field_kelurahan)));
             the_kel.click();
             Select kel = new Select(webDriver.findElement(By.xpath(field_kelurahan)));
             kel.selectByVisibleText(kelurahan);
