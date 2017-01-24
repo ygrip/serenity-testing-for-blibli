@@ -1,6 +1,6 @@
 package com.blibli.test.pages;
 
-import com.blibli.test.order.OrderDetails;
+import com.blibli.test.models.OrderModels;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
@@ -29,7 +29,7 @@ import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
 public class BlibliPage extends PageObject{
 
     MobileAppsPage newtab;
-    OrderDetails order;
+    OrderModels order;
 
     @FindBy()
     //login button
@@ -803,8 +803,8 @@ public class BlibliPage extends PageObject{
         WebElement field_code_payment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_payment)));
         WebElement field_code_transaction = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_code_transaction)));
 
-        check_code_payment = field_code_payment.getText().equals(OrderDetails.no_rekening);
-        check_code_transaction = field_code_transaction.getText().equals(OrderDetails.no_pesanan);
+        check_code_payment = field_code_payment.getText().equals(OrderModels.no_rekening);
+        check_code_transaction = field_code_transaction.getText().equals(OrderModels.no_pesanan);
 
         if(check_code_payment && check_code_transaction){
             return true;
@@ -840,9 +840,14 @@ public class BlibliPage extends PageObject{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        OrderDetails.no_rekening = code_payment.getText();
-        OrderDetails.no_pesanan = code_transaction.getText();
+        OrderModels.no_rekening = code_payment.getText();
+        OrderModels.no_pesanan = code_transaction.getText();
 
+    }
+
+    public WebElement coba(){
+        WebElement element = find(By.xpath(al_bag_belanja));
+        return element;
     }
 
     public void batalkanPesanan(){

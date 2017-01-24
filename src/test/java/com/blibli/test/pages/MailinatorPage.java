@@ -1,6 +1,6 @@
 package com.blibli.test.pages;
 
-import com.blibli.test.order.OrderDetails;
+import com.blibli.test.models.OrderModels;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.By;
@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.sql.Driver;
 
 /**
  * Created by Yunaz on 1/19/2017.
@@ -21,7 +19,7 @@ public class MailinatorPage extends PageObject{
     private String email_cancel_order_from_blibli = "//body//div//*[div[contains(text(),'Konfirmasi Order Cancelled')]]";
     private String btn_verifikasi = ".//*[@id='templateUpperBody']//table//span//a[contains(text(),'Verifikasi Nomor Handphone')]";
     private String al_checkbox = "//body//div[@ng-repeat='email in emails']//div//label";
-    OrderDetails order;
+    OrderModels order;
     BlibliPage mainpage;
 
     public void switchToMailinator(){
@@ -101,8 +99,8 @@ public class MailinatorPage extends PageObject{
 
         webDriver.switchTo().window(handle);
 
-        check_no_rek =  the_no_rek.equals(OrderDetails.no_rekening);
-        check_no_trans =  the_no_trans.equals(OrderDetails.no_pesanan);
+        check_no_rek =  the_no_rek.equals(OrderModels.no_rekening);
+        check_no_trans =  the_no_trans.equals(OrderModels.no_pesanan);
 
         if(check_no_rek && check_no_trans){
             return true;
@@ -132,7 +130,7 @@ public class MailinatorPage extends PageObject{
 
         webDriver.switchTo().window(handle);
 
-        return the_no_trans.equals(OrderDetails.no_pesanan);
+        return the_no_trans.equals(OrderModels.no_pesanan);
     }
 
     public void userClickedVerifikasi(){
