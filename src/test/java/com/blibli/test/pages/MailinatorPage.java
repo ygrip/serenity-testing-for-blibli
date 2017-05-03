@@ -69,16 +69,19 @@ public class MailinatorPage extends PageObject{
 
     public Boolean checkTheTransaction(){
         String al_no_rek = ".//*[@id='templateUpperBody']/table[2]/tbody/tr/td/table/tbody/tr/td/span/span/strong[3]";
-        String al_no_trans = ".//*[@id='templateColumns']//table//tbody//span//span[contains(text(),'NO. PESANAN')]/text()[preceding-sibling::br]";
-        String al_iframe = ".//*[@id='publicshowmaildivcontent']";
+        String al_no_trans = ".//*[@id='templateColumns']//table//tbody//span//span[contains(text(),'NO. PESANAN')]/text()[preceding-sibling::br and following-sibling::br]";
+        String al_iframe = ".//iframe[@id='publicshowmaildivcontent']";
         Boolean check_no_rek;
         Boolean check_no_trans;
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 20);
 
 
-        WebElement iframe = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_iframe)));
+        WebElement iframe = (new WebDriverWait(webDriver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(al_iframe)));
         webDriver.switchTo().frame(iframe);
+
+//        iframe.click();
 
         WebElement no_rek = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_no_rek)));
         try {

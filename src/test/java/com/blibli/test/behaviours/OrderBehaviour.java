@@ -8,7 +8,9 @@ import com.blibli.test.pages.BlibliPage;
 public class OrderBehaviour {
     BlibliPage mainpage;
 
-    public void clickOrderChart(){
-        mainpage.coba().click();
+    public void clickAnItem(){
+
     }
+
+
 }

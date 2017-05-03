@@ -9,10 +9,10 @@ Story: Add to Cart
 GivenStories: stories/search/SearchTestOne.story
 
 Scenario: add a goods in the cart
-Given i have searched for local items containing 'Nokia'
+Given i have searched for local items containing 'Asus'
 When i click the item
-Then they should see the item description contains 'Nokia'
-Given The user want to buy that product for '2'
+Then they should see the item description contains 'Asus'
+Given The user want to buy that product for '1'
 When The user want to proceed the order
 And The user want to choose the payment method by : <br> Method : 'Transfer' <br> Method Option : 'Mandiri' <br> and Sub Option : '0'
 Then The user should get the order details

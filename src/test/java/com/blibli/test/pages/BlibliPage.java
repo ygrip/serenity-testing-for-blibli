@@ -1,8 +1,9 @@
 package com.blibli.test.pages;
 
 import com.blibli.test.models.OrderModels;
+import com.blibli.test.models.UserModels;
+import com.blibli.test.steps.actor.User;
 import net.serenitybdd.core.annotations.findby.By;
-import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
@@ -17,7 +18,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static com.thoughtworks.selenium.SeleneseTestNgHelper.assertEquals;
@@ -31,19 +34,21 @@ public class BlibliPage extends PageObject{
     MobileAppsPage newtab;
     OrderModels order;
 
-    @FindBy()
     //login button
     private String login = "//body//*[@id='gdn-login-registrasi']";
+    private String idLogin = "gdn-login-registrasi";
 
     private String signup = "//body//*[@id='gdn-daftar']";
+    private String idSignup = "gdn-daftar";
 
-    private String btn_for_login ="//body//*[@id='gdn-submit-login']";
+    private String btnForLogin ="//body//*[@id='gdn-submit-login']";
 
-    private String nama_user = "//body//*[@id='loginEmail']";
+    private String namaUser = "//body//*[@id='loginEmail']";
 
-    private String password_user = "//body//*[@id='loginPassword']";
+    private String passwordUser = "//body//*[@id='loginPassword']";
 
     private String label = "//body//*[@id='gdnloginErrorLabel']";
+    private String idLabel = "gdnloginErrorLabel";
 
     private String search_field = "//body//*[@id='autocomplete-wrapper']//input[@type='text']";
 
@@ -59,7 +64,7 @@ public class BlibliPage extends PageObject{
 
     private String lanjutkan_verifikasi_nanti = "//body//*[@id='gdn-pnv-later-continue']";
 
-    private String registration_popup = "//body//*[@id='gdn-registration-form']/div";
+    private String registrationPopup = "//body//*[@id='gdn-registration-form']/div";
 
     private String the_signed_user = "//body//*[@id='gdn-already-login-label']/strong";
 
@@ -81,11 +86,11 @@ public class BlibliPage extends PageObject{
 
     private String simpan_profile = "//body//*[@id='gdn-profile-submit']";
 
-    private String al_btn_beli = "//body//*[@id='MyBtn'][@class='btn-buy']";
+    private String al_btn_beli = "//body//*[@id='gdn-buy-now-top']";
 
     private String al_bag_belanja = "//body//*[@id='gdn-cart-button']/span[1]";
 
-    private String al_section_beli = "//body//*[@id='blibli-main-ctrl']//section//div[@class='purchase-section']";
+    private String al_section_beli = "//body//*[@id='gdn-buy-now-top']";
 
     private String al_tab_header_pesanan = "//body//*[@id='blibli-main-ctrl']//section//div[@class='tabs-header']//li";
 
@@ -141,13 +146,13 @@ public class BlibliPage extends PageObject{
     }
 
     public void enterAUsername(String name){
-        WebElementFacade field_nama_user =  find(By.xpath(nama_user));
+        WebElementFacade field_nama_user =  find(By.xpath(namaUser));
 
         field_nama_user.type(name);
     }
 
     public void enterAPassword(String pass){
-        WebElementFacade field_password_user = find(By.xpath(password_user));
+        WebElementFacade field_password_user = find(By.xpath(passwordUser));
 
         field_password_user.type(pass);
     }
@@ -160,7 +165,7 @@ public class BlibliPage extends PageObject{
 
     public void loginNow(){
         WebDriver webDriver = getDriver();
-        WebElement loginButton = webDriver.findElement(By.xpath(btn_for_login));
+        WebElement loginButton = webDriver.findElement(By.xpath(btnForLogin));
         Actions action = new Actions(webDriver);
 
         /*String javaScript = "var evObj = document.createEvent('MouseEvents');" +
@@ -193,8 +198,23 @@ public class BlibliPage extends PageObject{
             }
         }else if(menu.equals("User")){
             hover_menu = webDriver.findElement(By.xpath(".//*[@id='gdn-already-login']"));
-
-            action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath("//body//*[@id='gdn-usermenu-box']/ul//li//a[contains(text(),'"+submenu+"')]"))).click().build().perform();
+            if(submenu.equals("Profil")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-profile']"))).click().build().perform();
+            }else if(submenu.equals("Pesanan")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-order']"))).click().build().perform();
+            }else if(submenu.equals("Rewards")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-rewards']"))).click().build().perform();
+            }else if(submenu.equals("Wishlist")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-wishlist']"))).click().build().perform();
+            }else if(submenu.equals("Voucher")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-voucher']"))).click().build().perform();
+            }else if(submenu.equals("Ulasan")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-review']"))).click().build().perform();
+            }else if(submenu.equals("Alamat")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-address']"))).click().build().perform();
+            }else if(submenu.equals("Logout")){
+                action.moveToElement(hover_menu).moveToElement(webDriver.findElement(By.xpath(".//*[@id='gdn-usermenu-logout']"))).click().build().perform();
+            }
         }
 
     }
@@ -358,14 +378,14 @@ public class BlibliPage extends PageObject{
             webDriver.navigate().to(url_chart);
         }
 
-        String al_checkout = "//body//*[@id='gdn-sb-page-continue-checkout']";
+        String al_checkout = ".//*[@id='gdn-sb-page-continue-checkout']";
 
         WebElement btn_checkout = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(al_checkout)));
-        try {
-            scrollUntilTheVisibilityOf(al_checkout);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            scrollUntilTheVisibilityOf(al_checkout);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         btn_checkout.click();
     }
@@ -480,7 +500,7 @@ public class BlibliPage extends PageObject{
     public String getDefinitionsofDescription(String descriptiontxt){
         //WebDriver webDriver = getDriver();
 
-        WebElementFacade descriptionList = find(By.xpath("//body//*[@id='blibli-main-ctrl']//section//div//section//h1[contains(text(),'"+descriptiontxt+"')]"));
+        WebElementFacade descriptionList = find(By.xpath(".//*[@id='blibli-main-ctrl']//section//div//h1[contains(text(),'"+descriptiontxt+"')]"));
 
         return descriptionList.getText();
     }
@@ -527,7 +547,7 @@ public class BlibliPage extends PageObject{
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
 
-        WebElement popup_register = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(registration_popup)));
+        WebElement popup_register = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(registrationPopup)));
 
         if(popup_register.isDisplayed()){
             WebElementFacade email_address = find(By.xpath("//body//*[@id='registrationFormEmailAddress']"));
@@ -845,11 +865,6 @@ public class BlibliPage extends PageObject{
 
     }
 
-    public WebElement coba(){
-        WebElement element = find(By.xpath(al_bag_belanja));
-        return element;
-    }
-
     public void batalkanPesanan(){
         WebDriver webDriver = getDriver();
         WebDriverWait wait = new WebDriverWait(webDriver, 10);
@@ -877,6 +892,391 @@ public class BlibliPage extends PageObject{
         input_field.click();
         input_field.sendKeys(email_to_check);
         input_field.sendKeys(Keys.RETURN);
+    }
+
+    //Generating the link to cart bag
+    private String idBtnBag = "gdn-cart-button";
+    public WebElement getButtonBag(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idBtnBag)));
+    }
+
+    //Generating the link to wishlist
+    private String idBtnWishList = "gdn-wishlist-header-text";
+    public WebElement getButtonWishlist(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idBtnWishList)));
+    }
+
+    //Generating the search field
+    public WebElement getSearchField() {
+        WebDriver driver = getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(search_field)));
+        return element;
+    }
+
+    //Generating the search button
+    public WebElement getButtonSearch() {
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(search_button)));
+    }
+
+    //Generating the search result page element
+    public WebElement getSearchResultElement(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body//*[@id='catalogProductListContentDiv']//*[div[contains(text(),'"+ UserModels.getUserSearch() +"')]]")));
+
+        if(!element.isDisplayed()){
+            WebElement notFound = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body//span[@class='search-result']//h1[contains(text(),'"+ UserModels.getUserSearch() +"')]")));
+
+            if(notFound.isDisplayed()){
+                element = notFound;
+            }
+            else {
+                WebElement notValid = find(By.xpath("//body//*[@class='content-inner-section']"));
+                element = notValid;
+            }
+
+        }
+        return element;
+    }
+
+    //Generating browser driver for later usage
+    public WebDriver getCurrentBrowser(){
+        return getDriver();
+    }
+
+    //Generating the title of the current active page
+    public String getCurrentTitle(){
+        return getDriver().getTitle();
+    }
+
+    //Generating the url of the current active page
+    public String getCurrentURL(){
+        return getDriver().getCurrentUrl();
+    }
+
+    //Gnerating selenium actions for later usage
+    public  Actions getCurrentAction(){
+        return new Actions(getDriver());
+    }
+
+    //Generating the register link in the mainpage
+    public WebElement getButtonRegister(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSignup)));
+    }
+
+    //Generating the guide element
+    private String idGuide = "gdn-panduan-belanja";
+    public WebElement getHelpElement(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idGuide)));
+    }
+
+    //A class that handles the element in help menu box
+    public class HelpMenuElement{
+        private final WebElement bayar, kirim, kembali, lainnya;
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+
+        //default constructor of help box element
+        public HelpMenuElement() {
+            this.bayar = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='gdn-panduan-belanja']//div//ul//li//a[contains(text(),'Pembayaran')]")));
+            this.kirim = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='gdn-panduan-belanja']//div//ul//li//a[contains(text(),'Pengiriman')]")));
+            this.kembali = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='gdn-panduan-belanja']//div//ul//li//a[contains(text(),'Pengembalian')]")));
+            this.lainnya = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='gdn-panduan-belanja']//div//ul//li//a[contains(text(),'Panduan lainnya')]")));
+        }
+
+        //return element panduan pembayaran
+        public WebElement getBayar() {
+            return bayar;
+        }
+        //return element panduan pengiriman
+        public WebElement getKirim() {
+            return kirim;
+        }
+        //return element panduan pengembalian
+        public WebElement getKembali() {
+            return kembali;
+        }
+        //return element panduan lainnya
+        public WebElement getLainnya() {
+            return lainnya;
+        }
 
     }
+
+    //Generating the mobile app element
+    private String idMobileApp = "mobile-app";
+    public WebElement getMobileAppElement(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idMobileApp)));
+    }
+
+    //A class that handle the mobile app element
+    public class MobileAppElements{
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        private final WebElement android, iOs, windows;
+
+        public MobileAppElements() {
+            this.android = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body//*[@id='mobile-app']//li//*[div[contains(text(),'Android')]]")));
+            this.iOs = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body//*[@id='mobile-app']//li//*[div[contains(text(),'iOS')]]")));
+            this.windows = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//body//*[@id='mobile-app']//li//*[div[contains(text(),'Windows')]]")));
+        }
+        public WebElement getAndroid() {
+            return android;
+        }
+
+        public WebElement getiOs() {
+            return iOs;
+        }
+
+        public WebElement getWindows() {
+            return windows;
+        }
+    }
+
+    //Generating the user signed in element
+    private String idUserSignedIn = "gdn-already-login";
+    public WebElement getUserSignedInElement(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserSignedIn)));
+    }
+
+    //A class that handle user menu box element
+    private String idUserMenuBox = "gdn-usermenu-box";
+    private String idUserProfileLink = "gdn-usermenu-profile";
+    private String idUserOrderLink = "gdn-usermenu-order";
+    private String idUserRewardLink = "gdn-usermenu-rewards";
+    private String idUserWishListLink = "gdn-usermenu-wishlist";
+    private String idUserVoucherLink = "gdn-usermenu-voucher";
+    private String idUserReviewLink = "gdn-usermenu-review";
+    private String idUserAddressLink = "gdn-usermenu-review";
+    private String idUserLogoutLink = "gdn-usermenu-logout";
+
+    public class UserMenuElements{
+        private final WebElement menuBox, profile, order, reward, wishlist, voucher, review, address, logout;
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+
+        //default constructor of UserMenu
+        public UserMenuElements() {
+            this.menuBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserMenuBox)));
+            this.profile = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserProfileLink)));
+            this.order = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserOrderLink)));
+            this.reward = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserRewardLink)));
+            this.wishlist = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserWishListLink)));
+            this.voucher = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserVoucherLink)));
+            this.review = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserReviewLink)));
+            this.address = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserAddressLink)));
+            this.logout = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idUserLogoutLink)));
+        }
+
+        //return the user menu box
+        public WebElement getMenuBox() {
+            return menuBox;
+        }
+
+        //return the user profile menu link
+        public WebElement getProfile() {
+            return profile;
+        }
+
+        //return the user order menu link
+        public WebElement getOrder() {
+            return order;
+        }
+
+        //return the user reward menu link
+        public WebElement getReward() {
+            return reward;
+        }
+
+        //return the user wishlist menu link
+        public WebElement getWishlist() {
+            return wishlist;
+        }
+
+        //return the user voucher menu link
+        public WebElement getVoucher() {
+            return voucher;
+        }
+
+        //return the user review menu link
+        public WebElement getReview() {
+            return review;
+        }
+
+        //return the user address menu link
+        public WebElement getAddress() {
+            return address;
+        }
+
+        //return the user logout menu link
+        public WebElement getLogout() {
+            return logout;
+        }
+
+    }
+    //Generating the user menu box
+
+    //Generating the login link in the mainpage
+    public WebElement getButtonLogin(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idLogin)));
+    }
+
+    private String idNamaUser = "loginEmail";
+    private String idpasswordUser = "loginPassword";
+    private String idbtnForLogin ="gdn-submit-login";
+
+    //A class to handle the element for login uses
+    public class LoginElement{
+        private final WebElement fieldEmail, fieldPassword, btnLogin;
+
+        //default constructor for login element
+        public LoginElement() {
+            WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+            this.fieldEmail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idNamaUser)));;
+            this.fieldPassword = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idpasswordUser)));
+            this.btnLogin = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idbtnForLogin)));
+        }
+
+        //return the webelement of email field in login popup
+        public WebElement getFieldEmail() {
+            return fieldEmail;
+        }
+
+        //return the webelement of the password field in login poopup
+        public WebElement getFieldPassword() {
+            return fieldPassword;
+        }
+
+        //return the webelement of the button login in login popup
+        public WebElement getBtnLogin() {
+            return btnLogin;
+        }
+    }
+
+    private String idEmailRegistry = "registrationFormEmailAddress";
+    private String idPasswordRegister = "registrationFormPassword";
+    private String idButtonRegister = "gdn-submit-registration";
+
+    //A class to handle the element for register uses
+    public class  RegisterElement{
+        private final WebElement fieldEmail, fieldPassword, btnRegister;
+
+        //default constructor for register element
+        public RegisterElement() {
+            WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+            this.fieldEmail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idEmailRegistry)));;
+            this.fieldPassword = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idPasswordRegister)));
+            this.btnRegister = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idButtonRegister)));
+        }
+
+        //return the webelement of the email field in the register popup
+        public WebElement getFieldEmail(){
+            return fieldEmail;
+        }
+
+        //return the webelement of the password field in the register popup
+        public WebElement getFieldPassword(){
+            return fieldPassword;
+        }
+
+        //return the webelement of the button register in the register popup
+        public WebElement getBtnRegister(){
+            return btnRegister;
+        }
+    }
+
+    //Generate the link used to verify later in verivication page
+    private String idVerLink = "gdn-pnv-later";
+    public WebElement getVerivicationLaterLink(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idVerLink)));
+    }
+
+    //Generate the button to verify later in the verivication later popup
+    private String idVerPopup = "gdn-pnv-later-continue";
+    public WebElement getVerivicationPopup(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idVerPopup)));
+    }
+
+    //A class that handles the element in profile page
+    private String idNamaLengkap = "gdn-profile-name";
+    private String idDayOfBirth = "gdn-profile-day";
+    private String idMonthOfBirth = "gdn-profile-month";
+    private String idYearOfBirth = "gdn-profile-year";
+    private String idPhoneNumber = "gdn-profile-phone";
+    private String idEmail = "gdn-profile-email";
+    private String xpathGenderMale = "body//*[@id='profileForm']//div//span/input[@value ='Male']";
+    private String xpathGenderFemale = "body//*[@id='profileForm']//div//span/input[@value ='Female']";
+    private String idNewsLetterStatus = "gdnNewsletterStatus";
+    private String idBtnChangePassword = "gdn-profile-change-password";
+    private String idBtnSaveProfile = "gdn-profile-submit";
+
+    public class ProfilePageElement{
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        private final WebElement fieldNamaLengkap, fieldDay, fieldMonth, fieldYear, fieldPhone, fieldEmail, checkMale, checkFemale, checkNewsLetter, btnChangePassword, btnSave;
+
+        public ProfilePageElement() {
+            this.fieldNamaLengkap = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idNamaLengkap)));
+            this.fieldDay = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idDayOfBirth)));
+            this.fieldMonth = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idMonthOfBirth)));
+            this.fieldYear = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idYearOfBirth)));
+            this.fieldPhone = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idPhoneNumber)));
+            this.fieldEmail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idEmail)));
+            this.checkMale = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(xpathGenderMale)));
+            this.checkFemale = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(xpathGenderFemale)));
+            this.checkNewsLetter = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idNewsLetterStatus)));
+            this.btnChangePassword = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idBtnChangePassword)));
+            this.btnSave = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(idBtnSaveProfile)));
+        }
+        public WebElement getFieldNamaLengkap() {
+            return fieldNamaLengkap;
+        }
+
+        public WebElement getFieldDay() {
+            return fieldDay;
+        }
+
+        public WebElement getFieldMonth() {
+            return fieldMonth;
+        }
+
+        public WebElement getFieldYear() {
+            return fieldYear;
+        }
+
+        public WebElement getFieldPhone() {
+            return fieldPhone;
+        }
+
+        public WebElement getFieldEmail() {
+            return fieldEmail;
+        }
+
+        public WebElement getCheckMale() {
+            return checkMale;
+        }
+
+        public WebElement getCheckFemale() {
+            return checkFemale;
+        }
+
+        public WebElement getCheckNewsLetter() {
+            return checkNewsLetter;
+        }
+
+        public WebElement getBtnChangePassword() {
+            return btnChangePassword;
+        }
+
+        public WebElement getBtnSave() {
+            return btnSave;
+        }
+    }
+
 }
